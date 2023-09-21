@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from 'react-redux'; 
 import {Link} from 'react-router-dom';
 import axios from 'axios'; 
@@ -8,11 +8,13 @@ import {addUser} from '../Actions/usersAction';
 const AccountInformation = (props)=>
 {
     const dispatch = useDispatch();
-    
     const userObj = useSelector((state)=>
     {
         return state.users; 
     });
+
+    const token = localStorage.getItem('token');
+    const [refreshUser, setRefreshUser] = useState(true);
 
     useEffect(()=>
     {
@@ -20,13 +22,14 @@ const AccountInformation = (props)=>
         {
             try
             {
-                if(!userObj.data.username)
+                if(refreshUser)
                 {
-                    const tempAccount = await axios.get(`http://localhost:3997/api/users/account`, {headers:{'x-auth':localStorage.getItem('token')}});
+                    const tempAccount = await axios.get(`http://localhost:3997/api/users/account`, {headers:{'authorization':token}});
                     const accountDetails = tempAccount.data; 
                     if(accountDetails.hasOwnProperty('username'))
                     {
                         dispatch(addUser(accountDetails));
+                        setRefreshUser(false);
                     }
                     else
                     {
@@ -39,7 +42,7 @@ const AccountInformation = (props)=>
                 alert(err.message);
             }
         })()
-    }, [])
+    }, [refreshUser]);
 
     return(
         <div>
