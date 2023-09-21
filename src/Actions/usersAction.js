@@ -29,6 +29,34 @@ export const startRegisterUser = (inputObj, resetForm, history)=>
     }
 };
 
+//API call to make a creator; 
+export const startRegisterCreator = (inputObj, resetForm, history)=>
+{
+    return async (dispatch)=>
+    {
+        try
+        {
+            const temp = await axios.post(`http://localhost:3997/api/creator`, inputObj, {headers:{'authorization': localStorage.getItem('token')}}); 
+            const result = temp.data; 
+
+            if(result.hasOwnProperty('bio'))
+            {
+                alert('You are now a Creator !!');
+                resetForm(); 
+                history.push('/');
+            }
+            else
+            {
+                alert('Error! Please try again.');
+            }
+        }
+        catch(err)
+        {
+            alert(err.response);
+        };
+    };
+};
+
 //API call for logging in of a user. 
 export const startAddUser = (inputObj, resetForm, history)=>
 {
