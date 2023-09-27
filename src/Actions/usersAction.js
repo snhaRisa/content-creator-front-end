@@ -94,3 +94,11 @@ export const addUser = (inputObj)=>
         payload: inputObj
     });
 };
+
+//remove user after logging out from the store.
+export const removeUser = ()=>
+{
+    return{
+        type: "REMOVE_USER", 
+    }
+};
