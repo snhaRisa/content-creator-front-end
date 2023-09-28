@@ -53,7 +53,6 @@ const AccountContainer = (props)=>
 
     return(
         <div>
-            <h2>Work In Progress !</h2>
             {
                 user.data.role === 'user' ?
                 <UserAccount/>
