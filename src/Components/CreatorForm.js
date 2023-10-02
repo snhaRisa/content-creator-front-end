@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 import {useHistory} from 'react-router-dom'; 
 import {useDispatch} from 'react-redux'; 
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css'; // Import the CSS styles
 
 import { startRegisterCreator } from "../Actions/usersAction";
 
@@ -9,6 +11,8 @@ const CreatorForm = (props)=>
     const history = useHistory(); 
     const dispatch = useDispatch(); 
 
+    const [richText, setRichText] = useState('');
+    const [plainText, setPlainText] = useState('');
     const [errors, setErrors] = useState({});
     const [creator, setCreator] = useState({
         image: '', //store the URL
@@ -22,6 +26,13 @@ const CreatorForm = (props)=>
         }
     }); 
 
+    function stripHtml(htmlText)
+    {
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = htmlText; 
+        return tempDiv.innerText || tempDiv.textContent || ''; 
+    }
+
     function handleChange(event)
     {
         const {name, value} = event.target; 
@@ -31,15 +42,19 @@ const CreatorForm = (props)=>
             const socialMediaValue = name.split('.')[1]; 
             setCreator({...creator, socialMedia: {...creator.socialMedia, [socialMediaValue] : value}});
         }
-        else if(name === 'bio')
-        {
-            setCreator({...creator, bio: value});
-        }
         else if(name === 'categories')
         {
             setCreator({...creator, categories: value}); 
         }
     };
+
+    function handleRichChange(value)
+    {
+        setRichText(value);
+        const strippedText = stripHtml(value);
+        setPlainText(strippedText);
+        setCreator({...creator, bio: strippedText});
+    }
 
     function runValidations()
     {
@@ -99,7 +114,20 @@ const CreatorForm = (props)=>
                 </div>
                 <div>
                     <label htmlFor="bio">Your Bio: </label>
-                    <textarea id='bio' name="bio" value={creator.bio} onChange={handleChange}></textarea>
+                    <ReactQuill
+                        id="bio"
+                        value={richText}
+                        name='bio'
+                        onChange={handleRichChange}
+                        modules={{
+                            toolbar: [
+                            ['bold', 'italic', 'underline'],
+                            ['link', 'image'],
+                            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                            ['clean']
+                            ],
+                        }}
+                    />
                     {errors.bio && <span style={{color:'red'}}>{errors.bio}</span>}<br/><br/>
                 </div>
                 <div>
