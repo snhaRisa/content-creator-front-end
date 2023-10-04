@@ -86,6 +86,35 @@ export const startAddUser = (inputObj, resetForm, history)=>
     })
 };
 
+//API call for creating subscription plans.
+export const startCreatePlan = (inputObj, resetForm, history)=>
+{
+    return async ()=>
+    {
+        try
+        {
+            const temp = await axios.post('http://localhost:3997/api/subscribePlans', inputObj, {headers:{'authorization': localStorage.getItem('token')}}); 
+            const tempData = temp.data; 
+            if(tempData.hasOwnProperty('_id'))
+            {
+                alert('Successfully Created your plan!');
+                resetForm();
+                history.push('/account');
+            }
+            else
+            {
+                alert(tempData);
+                resetForm();
+                history.push('/account');
+            }
+        }
+        catch(err)
+        {
+            alert(err.message);
+        }
+    }
+}
+
 //After logged in, the user is added in the store. 
 export const addUser = (inputObj)=>
 {
