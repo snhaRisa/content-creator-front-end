@@ -1,18 +1,56 @@
 import React,{useEffect, useState} from 'react';
+import { useDispatch } from 'react-redux';
+import axios from 'axios';
 
 import Navigation from './Navigation';
+import { addUser } from '../Actions/usersAction';
+import SubscriptionPlanForm from './SubscriptionPlanForm';
 
 const App = (props)=>
 {
     const [isLog, setIsLog] = useState(false); 
+    const token = localStorage.getItem('token');
+
+    const dispatch = useDispatch();
 
     useEffect(()=>
     {
-        if(localStorage.getItem('token'))
+        (async ()=>
         {
-            setIsLog(true)
-        }
-    }, []);
+            try
+            {
+                if(token)
+                {
+                    setIsLog(true);
+
+                    const temp = await axios.get('http://localhost:3997/api/users/account', {headers:{'authorization': token}});
+                    const tempResult = temp.data; 
+
+                    if(tempResult.hasOwnProperty('role') && tempResult.role === 'creator')
+                    {
+                        const tempCreator = await axios.get('http://localhost:3997/api/creator', {headers:{'authorization': token}});
+                        const tempCreatorResult = tempCreator.data; 
+                        if(tempCreatorResult.hasOwnProperty('bio'))
+                        {
+                            dispatch(addUser(tempCreatorResult));
+                        }
+                        else
+                        {
+                            alert(tempCreatorResult.message);
+                        };
+                    }
+                    else if(tempResult.role === 'user')
+                    {
+                        dispatch(addUser(tempResult));
+                    }
+                }
+            }
+            catch(err)
+            {
+                alert(err.message);
+            }
+        })();
+    }, [token]);
 
     function handleIsLog()
     {
@@ -23,6 +61,7 @@ const App = (props)=>
         <div>
             <h1>This is Application.</h1>
             <Navigation isLog={isLog} handleIsLog={handleIsLog}/>
+            <SubscriptionPlanForm/>
         </div>
     );
 };

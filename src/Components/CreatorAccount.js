@@ -1,7 +1,5 @@
 import React from 'react'; 
 import { useSelector } from 'react-redux';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css'; // Import the CSS styles
 
 const CreatorAccount = (props)=>
 {
