@@ -8,6 +8,7 @@ import Register from './Register';
 import Login from './Login';
 import AccountContainer from './AccountContainer';
 import CreatorForm from './CreatorForm';
+import SubscriptionPlanForm from './SubscriptionPlanForm';
 
 import PrivateRoute from './PrivateRoute';
 
@@ -45,6 +46,7 @@ const Navigation = (props)=>
             <Route path='/login' render={(props)=>{return <Login {...props} handleIsLog={handleIsLog}/>}} exact={true}/>
             <PrivateRoute path='/account' component={AccountContainer} exact={true}/>
             <PrivateRoute path='/change-to-creator' component={CreatorForm} exact={true}/>
+            <PrivateRoute path='/create-plans' component={SubscriptionPlanForm} exact={true}/>
         </>
     );
 };
