@@ -4,11 +4,11 @@ import axios from 'axios';
 
 import Navigation from './Navigation';
 import { addUser } from '../Actions/usersAction';
-import SubscriptionPlanForm from './SubscriptionPlanForm';
 
 const App = (props)=>
 {
     const [isLog, setIsLog] = useState(false); 
+
     const token = localStorage.getItem('token');
 
     const dispatch = useDispatch();
@@ -61,7 +61,6 @@ const App = (props)=>
         <div>
             <h1>This is Application.</h1>
             <Navigation isLog={isLog} handleIsLog={handleIsLog}/>
-            <SubscriptionPlanForm/>
         </div>
     );
 };

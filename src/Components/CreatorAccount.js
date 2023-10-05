@@ -1,5 +1,6 @@
 import React from 'react'; 
 import { useSelector } from 'react-redux';
+import {Link} from 'react-router-dom';
 
 const CreatorAccount = (props)=>
 {
@@ -75,6 +76,7 @@ const CreatorAccount = (props)=>
                 :
                 <h3>Loading...</h3>
             }
+            <Link to='/create-plans'>Manage Subscriptions</Link>
         </div>
     );
 };
