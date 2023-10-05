@@ -1,5 +1,6 @@
 Bugs & Fixes;
     1.) Home Page doesn't makes any API call to get the user. Need to implement that.   FIXED
+    2.) Categories should be array of Objects. PENDING.
 
 
 Payment Integration; 
