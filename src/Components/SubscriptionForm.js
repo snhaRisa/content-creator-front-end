@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux'; 
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import {Link} from 'react-router-dom';
 
 import { startCreatePlan } from '../Actions/usersAction';
 
-const SubscriptionPlanForm = (props)=>
+const SubscriptionForm = (props)=>
 {
     const [planName, setPlanName] = useState('');
     const [planAmount, setPlanAmount] = useState('');
@@ -79,12 +78,6 @@ const SubscriptionPlanForm = (props)=>
 
     return(
         <div>
-            <h2>Manage Your Subscriptions</h2>
-            <p>
-                Welcome - Simplify Your Subscription Management! Manage, renew, and optimize all your subscriptions in one place.<br/>
-                You can create <b>one plan</b> for the viewers who love your content & are happy to support you. <br/>
-                Create custom made content for them & provide yourself an income ! 
-            </p>
             <form onSubmit={handleSubmit}>
                 <input type='text' name='planName' value={planName} placeholder='Enter plan name...' onChange={handleChange}/>
                 {errors.planName && <span style={{color:'red'}}>{errors.planName}</span>}
@@ -92,9 +85,8 @@ const SubscriptionPlanForm = (props)=>
                 {errors.planAmount && <span style={{color:'red'}}>{errors.planAmount}</span>}
                 <input type='submit' value={'Make your plan'}/>
             </form><br/>
-            <Link to='/account'>Back to Dashboard</Link>
         </div>
     );
 };
 
-export default SubscriptionPlanForm; 
+export default SubscriptionForm; 
