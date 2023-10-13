@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 
@@ -33,7 +33,6 @@ const SubscriptionPlan = (props)=>
                     if(resultTemp)
                     {
                         setPlan(resultTemp);
-                        setRefresh(false);
                     }
 
                     const resultSubscriber = subscriberTemp.data;
@@ -51,6 +50,66 @@ const SubscriptionPlan = (props)=>
         }
     }, [refresh])
 
+    async function handleDelete(inputId)
+    {
+        try
+        {
+            const temp = await axios.delete(`http://localhost:3997/api/subscription-plans/${inputId}`, {headers:{'authorization': token}});
+            const resultTemp = temp.data; 
+            if(resultTemp._id === inputId)
+            {
+                alert('Successfully Deleted your plan !');
+                setPlan({});
+            }
+            else
+            {
+                alert('Error while deleting your plan. Please try again later !');
+            }
+        }
+        catch(err)
+        {
+            console.log(err);
+        }
+        
+    }
+
+    async function handleEdit(inputId)
+    {
+        try
+        {
+            let amount, name;
+           
+            name = prompt('Enter your pack name !'); 
+
+            if(name && name.length > 0)
+            {
+               amount = prompt('Enter your amount !');      
+            }
+            else
+            {
+                alert('Name cannot be empty!')   
+            }   
+
+            if(name && amount)
+            {
+                const temp = await axios.put(`http://localhost:3997/api/subscription/update/${inputId}`, {name: name, amount: amount}, {headers: {'authorization': token}});
+                const result = temp.data; 
+                if(result.hasOwnProperty('name'))
+                {
+                    setPlan(result);
+                }
+                else
+                {
+                    alert('Error while updating the plan! Please try later.');
+                }
+            }
+        }
+        catch(err)
+        {
+            console.log(err);
+        }
+    }
+
     return(
         <div>
             <h2>Manage Your Subscriptions</h2>
@@ -63,6 +122,8 @@ const SubscriptionPlan = (props)=>
                     You have created one plan. Here are the details of your subscription plan.<br/><br/>
                     <em>Plan Name</em> : <b>{plan.name}</b><br/>
                     <em>Plan Amount</em> : <b>{plan.amount}</b><br/><br/>
+                    <button onClick={()=>{handleDelete(plan._id)}}>Delete Your Pack</button>
+                    <button onClick={()=>{handleEdit(plan._id)}}>Edit your Pack</button><br/><br/>
                     {
                         subscribers.length > 0 ?
                         <>
