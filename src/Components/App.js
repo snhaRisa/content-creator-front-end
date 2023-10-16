@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import axios from 'axios';
 
 import Navigation from './Navigation';
+import PaymentButton from './PaymentButton';
 import { addUser } from '../Actions/usersAction';
 
 const App = (props)=>
@@ -61,6 +62,7 @@ const App = (props)=>
         <div>
             <h1>This is Application.</h1>
             <Navigation isLog={isLog} handleIsLog={handleIsLog}/>
+            <PaymentButton/>
         </div>
     );
 };

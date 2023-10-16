@@ -29,7 +29,7 @@ const AccountContainer = (props)=>
                     const userTemp = await axios.get('http://localhost:3997/api/users/account', {headers:{'authorization': token}});
                     if(userTemp.data.hasOwnProperty('role') && userTemp.data.role === 'creator')
                     {
-                        const creatorTemp = await axios.get('http://localhost:3997/api/creator', {headers:{'authorization': token}});
+                        const creatorTemp = await axios.get('http://localhost:3997/api/creator', {headers: {'authorization': token}});
                         if(creatorTemp.data.hasOwnProperty('bio'))
                         {
                             dispatch(addUser(creatorTemp.data));
