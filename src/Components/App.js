@@ -1,6 +1,7 @@
 import React,{useEffect, useState} from 'react';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import Navigation from './Navigation';
 import PaymentButton from './PaymentButton';
@@ -59,10 +60,12 @@ const App = (props)=>
     };
 
     return(
-        <div>
-            <h1>This is Application.</h1>
-            <Navigation isLog={isLog} handleIsLog={handleIsLog}/>
-            <PaymentButton/>
+        <div className="container-fluid">
+            <div className="text-center">
+                <h1 className="display-5 mb-5 pd-3" style={{color: 'brown'}}>Content Creation</h1>
+            </div>
+            <Navigation isLog={isLog} handleIsLog={handleIsLog} />
+            <PaymentButton />
         </div>
     );
 };

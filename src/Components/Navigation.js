@@ -1,6 +1,7 @@
 import React from 'react'; 
 import {Link, Route} from 'react-router-dom'; 
 import { useDispatch } from 'react-redux';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import { removeUser } from '../Actions/usersAction';
 import Home from './Home';
@@ -19,27 +20,27 @@ const Navigation = (props)=>
     const {isLog, handleIsLog} = props; 
     const dispatch = useDispatch(); 
 
+
     return(
-        <>
-            <h2>Navigation</h2>
-            <ul>
-                <li><Link to='/'>Home</Link></li>
+        <div className='container'>
+            <ul className='nav'>
+                <li className='nav-item'><Link to='/' className='nav-link'>Home</Link></li>
                 {
                     isLog ?
                     <>
-                        <li><Link to='/account'>Account</Link></li>
+                        <li><Link to='/account' className='nav-link'>Account</Link></li>
                         <li><Link to='/' onClick={()=>
                         {
                             localStorage.removeItem('token');
                             handleIsLog();
                             dispatch(removeUser());
                             alert('Successfully Logged-Out!');
-                        }}>Logout</Link></li>
+                        }} className='nav-link'>Logout</Link></li>
                     </>
                     :
                     <>
-                        <li><Link to='/register'>Register</Link></li>
-                        <li><Link to='/login'>Log-In</Link></li>
+                        <li><Link to='/register' className='nav-link'>Register</Link></li>
+                        <li><Link to='/login' className='nav-link'>Log-In</Link></li>
                     </>
                 }
             </ul>
@@ -51,7 +52,7 @@ const Navigation = (props)=>
             <PrivateRoute path='/create-plans' component={SubscriptionPlan} exact={true}/>
             <PrivateRoute path='/success' component={Success} exact={true}/>
             <PrivateRoute path='/cancel' component={Cancel} exact={true}/>
-        </>
+        </div>
     );
 };
 
