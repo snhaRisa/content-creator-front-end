@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {useHistory} from 'react-router-dom'; 
+import {useHistory, Link} from 'react-router-dom'; 
 import {useDispatch} from 'react-redux'; 
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // Import the CSS styles
@@ -105,15 +105,15 @@ const CreatorForm = (props)=>
     };
 
     return(
-        <div>
-            <h4>Become A Creator !</h4>
+        <div className='container mt-3'>
+            <h4>Become A Creator !</h4><br/>
             <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor='image'>Upload your Image : </label>
-                    <input type="file" accept="image/*" id="image" name="image" value={creator.image} onChange={handleChange}/><br/><br/>
-                </div>
-                <div>
-                    <label htmlFor="bio">Your Bio: </label>
+                <div className="form-group">
+                    <label htmlFor='image'>Upload your Image:</label><br/>
+                    <input type="file" className="form-control-file" accept="image/*" id="image" name="image" value={creator.image} onChange={handleChange}/>
+                </div><br/>
+                <div className="form-group">
+                    <label htmlFor="bio">Your Bio:</label>
                     <ReactQuill
                         id="bio"
                         value={richText}
@@ -121,38 +121,43 @@ const CreatorForm = (props)=>
                         onChange={handleRichChange}
                         modules={{
                             toolbar: [
-                            ['bold', 'italic', 'underline'],
-                            ['link', 'image'],
-                            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                            ['clean']
+                                ['bold', 'italic', 'underline'],
+                                ['link', 'image'],
+                                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                                ['clean']
                             ],
                         }}
                     />
-                    {errors.bio && <span style={{color:'red'}}>{errors.bio}</span>}<br/><br/>
-                </div>
-                <div>
-                    <label htmlFor="categories">Enter your content category : </label>
-                    <textarea id='categories' name="categories" value={creator.categories} onChange={handleChange}></textarea>
-                    {errors.categories && <span style={{color:'red'}}>{errors.categories}</span>}<br/><br/>
-                </div>
-                <div>
-                    <label htmlFor="facebook">Enter your facebook link : </label>
-                    <input type="text" id='facebook' name="socialMedia.facebook" value={creator.socialMedia.facebook} onChange={handleChange}/><br/><br/>
-                </div>
-                <div>
-                    <label htmlFor="instagram">Enter your instagram link : </label>
-                    <input type="text" id='instagram' name="socialMedia.instagram" value={creator.socialMedia.instagram} onChange={handleChange}/><br/><br/>
-                </div>
-                <div>
-                    <label htmlFor="youtube">Enter your youtube link : </label>
-                    <input type="text" id='youtube' name="socialMedia.youtube" value={creator.socialMedia.youtube} onChange={handleChange}/><br/><br/>
-                </div>
-                <div>
-                    <label htmlFor="twitter">Enter your twitter link : </label>
-                    <input type="text" id='twitter' name="socialMedia.twitter" value={creator.socialMedia.twitter} onChange={handleChange}/><br/><br/>
-                </div>
-                <input type="submit" value="Submit"/>
-            </form>
+                    {errors.bio && <span style={{color:'red'}}>{errors.bio}</span>}
+                </div><br/>
+                <div className="form-group">
+                    <label htmlFor="categories">Enter your content category:</label>
+                    <textarea className="form-control" id='categories' name="categories" value={creator.categories} onChange={handleChange}></textarea>
+                    {errors.categories && <span style={{color:'red'}}>{errors.categories}</span>}
+                </div><br/>
+                <div className="form-group">
+                    <label htmlFor="facebook">Enter your Facebook link:</label>
+                    <input type="text" className="form-control" id='facebook' name="socialMedia.facebook" value={creator.socialMedia.facebook} onChange={handleChange}/>
+                </div><br/>
+                <div className="form-group">
+                    <label htmlFor="instagram">Enter your Instagram link:</label>
+                    <input type="text" className="form-control" id='instagram' name="socialMedia.instagram" value={creator.socialMedia.instagram} onChange={handleChange}/>
+                </div><br/>
+                <div className="form-group">
+                    <label htmlFor="youtube">Enter your YouTube link:</label>
+                    <input type="text" className="form-control" id='youtube' name="socialMedia.youtube" value={creator.socialMedia.youtube} onChange={handleChange}/>
+                </div><br/>
+                <div className="form-group">
+                    <label htmlFor="twitter">Enter your Twitter link:</label>
+                    <input type="text" className="form-control" id='twitter' name="socialMedia.twitter" value={creator.socialMedia.twitter} onChange={handleChange}/>
+                </div><br/>
+                <button type="submit" className="btn btn-dark">Submit</button>
+            </form><br/>
+            <div className="alert alert-info" role="alert">
+                <Link to='/account' href="#" className="alert-link">
+                    Back to Your Account.
+                </Link>
+            </div>
         </div>
     );
 };

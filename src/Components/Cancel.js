@@ -46,14 +46,14 @@ const Cancel = (props)=>
     }, []);
     
     return(
-        <>
+        <div className='container mt-3 text-center'>
             <h2>Payment Cancelled.</h2>
             <p>
                 We are sorry!. We would love you to be a part of our exclusive content viewers. 
                 We regret any inconvenience caused.<br/><br/>
                 <b>You will be redirected to our Home-Page.</b>
             </p>
-        </>
+        </div>
     );
 };
 

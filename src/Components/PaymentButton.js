@@ -15,7 +15,7 @@ const PaymentButton = (props)=>
     {
         try
         {
-            const userId = user.userId._id;
+            const userId = user._id || user.userId._id 
 
             const getDataTemp = await axios.get(`http://localhost:3997/payment-get-data?userId=${userId}&&contentId=${contentId}`);
             const getData = getDataTemp.data; 
@@ -36,7 +36,7 @@ const PaymentButton = (props)=>
 
     return(
         <>
-            <button 
+            <button className='btn btn-dark'
                 onClick={()=>{handleCheckout('652ce6c041cac4c186dc795a')}}>
                 Buy the Subscription.
             </button>

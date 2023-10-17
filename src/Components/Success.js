@@ -1,6 +1,7 @@
 import React, {useEffect} from 'react'; 
 import axios from 'axios';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import Swal from 'sweetalert2';
 
 const Success = (props)=>
 {
@@ -34,7 +35,7 @@ const Success = (props)=>
                     
                     if(subTemp.data === 'Already subscribed!')
                     {
-                        alert(subTemp.data);
+                        Swal.fire(subTemp.data);
                         await setTimeout(()=>
                         {
                             history.push('/');
@@ -42,7 +43,7 @@ const Success = (props)=>
                     }
                     else if(subTemp.data.hasOwnProperty('_id'))
                     {
-                        alert('Successfully Subscribed !');
+                        Swal.fire('Successfully Subscribed !');
                         await setTimeout(()=>
                         {
                             history.push('/');
@@ -52,22 +53,21 @@ const Success = (props)=>
             }
             catch(err)
             {
-                alert(err.message);
+                Swal.fire(err.message);
             }
         })();
     },[]);
 
     return(
-        <>
+        <div className='container text-center'>
             <h2>Payment Successful !</h2>
             <p>
                 You now have access to the exclusive contents of our websites. These contents are special for the creators, which are handpicked for you. <br/>
-            
                 Thank You for your valuable time & trust. 
                 We hope you enjoy this new journey. <br/><br/>
                 <b>You will be redirected to our Home-Page.</b>
             </p>
-        </>
+        </div>
     );
 };
 

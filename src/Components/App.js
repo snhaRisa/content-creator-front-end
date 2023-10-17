@@ -60,9 +60,9 @@ const App = (props)=>
     };
 
     return(
-        <div className="container-fluid">
+        <div className="container">
             <div className="text-center">
-                <h1 className="display-5 mb-5 pd-3" style={{color: 'brown'}}>Content Creation</h1>
+                <h1 className="display-5 mt-5 mb-5 pd-3" style={{color: 'brown'}}>Content Creation</h1>
             </div>
             <Navigation isLog={isLog} handleIsLog={handleIsLog} />
             <PaymentButton />
