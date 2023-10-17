@@ -2,6 +2,7 @@ import React from 'react';
 import {Link, Route} from 'react-router-dom'; 
 import { useDispatch } from 'react-redux';
 import "bootstrap/dist/css/bootstrap.min.css";
+import Swal from 'sweetalert2';
 
 import { removeUser } from '../Actions/usersAction';
 import Home from './Home';
@@ -22,7 +23,7 @@ const Navigation = (props)=>
 
 
     return(
-        <div className='container'>
+        <div className='container md-5 pd-2'>
             <ul className='nav'>
                 <li className='nav-item'><Link to='/' className='nav-link'>Home</Link></li>
                 {
@@ -34,7 +35,7 @@ const Navigation = (props)=>
                             localStorage.removeItem('token');
                             handleIsLog();
                             dispatch(removeUser());
-                            alert('Successfully Logged-Out!');
+                            Swal.fire('Successfully Logged-Out!');
                         }} className='nav-link'>Logout</Link></li>
                     </>
                     :

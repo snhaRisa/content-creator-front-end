@@ -3,8 +3,7 @@ Bugs & Fixes;
     2.) Categories should be array of Objects. PENDING.
 
 
-Payment Integration; 
-Will let user create only one plan or two plans. He would not be able to create more than 2 plans. 
-Then the viewer would have to select that plan and pay that amount. 
-Changes to form, 
-if already made 2 plans, not let them create any more. 
+Payment Integration;  DONE.
+Rich Text Integration; DONE.
+Admin Role Creation;    PENDING; 
+Payment CHECK logic;    PENDING;
