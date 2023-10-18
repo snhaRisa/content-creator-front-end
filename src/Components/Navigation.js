@@ -1,26 +1,27 @@
-import React from 'react'; 
-import {Link, Route} from 'react-router-dom'; 
+import React from 'react';
+import { Link, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import "bootstrap/dist/css/bootstrap.min.css";
 import Swal from 'sweetalert2';
 
 import { removeUser } from '../Actions/usersAction';
+import { createContent } from '../Actions/newContentAction';
 import Home from './Home';
 import Register from './Register';
 import Login from './Login';
 import AccountContainer from './AccountContainer';
 import CreatorForm from './CreatorForm';
+import CreateContent from './CreateContent'
 import SubscriptionPlan from './SubscriptionPlan';
 import Success from './Success';
 import Cancel from './Cancel';
-
 import PrivateRoute from './PrivateRoute';
+import NewContent from './CreateContent'
 
 const Navigation = (props)=>
 {
     const {isLog, handleIsLog} = props; 
     const dispatch = useDispatch(); 
-
 
     return(
         <div className='container md-5 pd-2'>
