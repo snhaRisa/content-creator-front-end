@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Swal from 'sweetalert2';
 
 import { removeUser } from '../Actions/usersAction';
-import { createContent } from '../Actions/newContentAction';
+// import { createContent } from '../Actions/newContentAction';
 import Home from './Home';
 import Register from './Register';
 import Login from './Login';
