@@ -16,7 +16,6 @@ import SubscriptionPlan from './SubscriptionPlan';
 import Success from './Success';
 import Cancel from './Cancel';
 import PrivateRoute from './PrivateRoute'
-// import NewContent from './CreateContent'
 
 const Navigation = (props) => {
     const { isLog, handleIsLog } = props
@@ -31,7 +30,7 @@ const Navigation = (props) => {
                         <>
                             <li><Link to='/post-content' className='nav-link' style={{ color: 'brown' }}>Create Content</Link></li>
                             <li><Link to='/account' className='nav-link' style={{ color: 'brown' }}>Account</Link></li>
-                            <li><Link to='/' style={{ color: 'white' }} onClick={() => {
+                            <li><Link to='/' style={{ color: 'brown' }} onClick={() => {
                                 localStorage.removeItem('token');
                                 handleIsLog();
                                 dispatch(removeUser());
@@ -44,6 +43,21 @@ const Navigation = (props) => {
                             <li><Link to='/register' className='nav-link' style={{ color: 'brown' }}>Register</Link></li>
                             <li><Link to='/login' className='nav-link' style={{ color: 'brown' }}>Log-In</Link></li>
                         </>
+                    <>
+                        <li><Link to='/account' className='nav-link' style={{color:'brown'}}>Account</Link></li>
+                        <li><Link to='/' style={{color:'brown'}} onClick={()=>
+                        {
+                            localStorage.removeItem('token');
+                            handleIsLog();
+                            dispatch(removeUser());
+                            Swal.fire('Successfully Logged-Out!');
+                        }} className='nav-link'>Logout</Link></li>
+                    </>
+                    :
+                    <>
+                        <li><Link to='/register' className='nav-link' style={{color:'brown'}}>Register</Link></li>
+                        <li><Link to='/login' className='nav-link' style={{color:'brown'}}>Log-In</Link></li>
+                    </>
                 }
             </ul>
             <Route path='/' component={Home} exact={true} />
