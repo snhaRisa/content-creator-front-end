@@ -8,3 +8,5 @@ Rich Text Integration; DONE.
 npm corn or forever;    PENDING;
 Admin Role Creation;    PENDING; 
 Payment CHECK logic;    PENDING;
+Add Subscribers;        PENDING; 
+Add Money Earnings;     PENDING;
