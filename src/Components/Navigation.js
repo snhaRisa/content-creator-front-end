@@ -31,7 +31,7 @@ const Navigation = (props)=>
                     isLog ?
                     <>
                         <li><Link to='/account' className='nav-link' style={{color:'brown'}}>Account</Link></li>
-                        <li><Link to='/' style={{color:'white'}} onClick={()=>
+                        <li><Link to='/' style={{color:'brown'}} onClick={()=>
                         {
                             localStorage.removeItem('token');
                             handleIsLog();
