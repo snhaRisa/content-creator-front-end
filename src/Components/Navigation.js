@@ -24,13 +24,13 @@ const Navigation = (props)=>
 
     return(
         <div className='container md-5 pd-2'>
-            <ul className='nav'>
-                <li className='nav-item'><Link to='/' className='nav-link'>Home</Link></li>
+            <ul className='nav' style={{backgroundColor:'white'}}>
+                <li className='nav-item'><Link to='/' className='nav-link' style={{color:'brown'}}>Home</Link></li>
                 {
                     isLog ?
                     <>
-                        <li><Link to='/account' className='nav-link'>Account</Link></li>
-                        <li><Link to='/' onClick={()=>
+                        <li><Link to='/account' className='nav-link' style={{color:'brown'}}>Account</Link></li>
+                        <li><Link to='/' style={{color:'white'}} onClick={()=>
                         {
                             localStorage.removeItem('token');
                             handleIsLog();
@@ -40,8 +40,8 @@ const Navigation = (props)=>
                     </>
                     :
                     <>
-                        <li><Link to='/register' className='nav-link'>Register</Link></li>
-                        <li><Link to='/login' className='nav-link'>Log-In</Link></li>
+                        <li><Link to='/register' className='nav-link' style={{color:'brown'}}>Register</Link></li>
+                        <li><Link to='/login' className='nav-link' style={{color:'brown'}}>Log-In</Link></li>
                     </>
                 }
             </ul>
