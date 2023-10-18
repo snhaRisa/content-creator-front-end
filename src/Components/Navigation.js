@@ -1,52 +1,60 @@
 import React from 'react';
 import { Link, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import "bootstrap/dist/css/bootstrap.min.css";
+import Swal from 'sweetalert2';
 
 import { removeUser } from '../Actions/usersAction';
+import { createContent } from '../Actions/newContentAction';
 import Home from './Home';
 import Register from './Register';
 import Login from './Login';
 import AccountContainer from './AccountContainer';
 import CreatorForm from './CreatorForm';
 import CreateContent from './CreateContent'
+import SubscriptionPlan from './SubscriptionPlan';
+import Success from './Success';
+import Cancel from './Cancel';
 import PrivateRoute from './PrivateRoute';
 import NewContent from './CreateContent'
-import { createContent } from '../Actions/newContentAction';
-const Navigation = (props) => {
-    const { isLog, handleIsLog } = props;
-    const dispatch = useDispatch();
 
-    return (
-        <>
-            <h2>Navigation</h2>
-            <ul>
+const Navigation = (props)=>
+{
+    const {isLog, handleIsLog} = props; 
+    const dispatch = useDispatch(); 
+
+    return(
+        <div className='container md-5 pd-2'>
+            <ul className='nav' style={{backgroundColor:'white'}}>
+                <li className='nav-item'><Link to='/' className='nav-link' style={{color:'brown'}}>Home</Link></li>
                 {
                     isLog ?
-                        <>
-                            <li><Link to='/account'>Account</Link></li>
-                            <li><Link to='/' onClick={() => {
-                                localStorage.removeItem('token');
-                                handleIsLog();
-                                dispatch(removeUser());
-                                alert('Successfully Logged-Out!');
-                            }}>Logout</Link></li>
-                            <li><Link to='/'>Home</Link></li>
-                            <li><Link to='/create'>Create Post</Link></li>
-                        </>
-                        :
-                        <>
-                            <li><Link to='/register'>Register</Link></li>
-                            <li><Link to='/login'>Log-In</Link></li>
-                        </>
+                    <>
+                        <li><Link to='/account' className='nav-link' style={{color:'brown'}}>Account</Link></li>
+                        <li><Link to='/' style={{color:'white'}} onClick={()=>
+                        {
+                            localStorage.removeItem('token');
+                            handleIsLog();
+                            dispatch(removeUser());
+                            Swal.fire('Successfully Logged-Out!');
+                        }} className='nav-link'>Logout</Link></li>
+                    </>
+                    :
+                    <>
+                        <li><Link to='/register' className='nav-link' style={{color:'brown'}}>Register</Link></li>
+                        <li><Link to='/login' className='nav-link' style={{color:'brown'}}>Log-In</Link></li>
+                    </>
                 }
             </ul>
-            <Route path='/' component={Home} exact={true} />
-            <Route path='/register' component={Register} exact={true} />
-            <Route path='/login' render={(props) => { return <Login {...props} handleIsLog={handleIsLog} /> }} exact={true} />
-            <PrivateRoute path='/account' component={AccountContainer} exact={true} />
-            <PrivateRoute path='/change-to-creator' component={CreatorForm} exact={true} />
-            <PrivateRoute path='/create' component={CreateContent} exact={true} />
-        </>
+            <Route path='/' component={Home} exact={true}/>
+            <Route path='/register' component={Register} exact={true}/>
+            <Route path='/login' render={(props)=>{return <Login {...props} handleIsLog={handleIsLog}/>}} exact={true}/>
+            <PrivateRoute path='/account' component={AccountContainer} exact={true}/>
+            <PrivateRoute path='/change-to-creator' component={CreatorForm} exact={true}/>
+            <PrivateRoute path='/create-plans' component={SubscriptionPlan} exact={true}/>
+            <PrivateRoute path='/success' component={Success} exact={true}/>
+            <PrivateRoute path='/cancel' component={Cancel} exact={true}/>
+        </div>
     );
 };
 

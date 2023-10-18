@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import validator from 'validator';
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch } from "react-redux";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import { startRegisterUser } from "../Actions/usersAction";
 
@@ -37,7 +38,7 @@ const Register = (props)=>
         
         if(username.trim().length === 0)
         {
-            temp.username = 'UserName cannot be Empty!';
+            temp.username = 'Username cannot be Empty!';
         }
         
         if(!validator.isEmail(email))
@@ -90,17 +91,27 @@ const Register = (props)=>
         }
     };
 
+
     return (
-        <div>
-            <h3>Register With Us !</h3>
+        <div className="container md-5 pd-2 text-center">
+            <h3 className="mb-4 ">Register With Us !</h3>
             <form onSubmit={handleSubmit}>
-                <input type="text" name="username" value={username} placeholder="Enter Your User-Name..." onChange={handleChange}/>
-                {errors.username && <span style={{color:'red'}}>{errors.username}</span>}<br/><br/>
-                <input type="text" name="email" value={email} placeholder="Enter Your E-Mail..." onChange={handleChange}/>
-                {errors.email && <span style={{color:'red'}}>{errors.email}</span>}<br/><br/>
-                <input type="password" name="password" value={password} placeholder="Enter Your Password..." onChange={handleChange}/>
-                {errors.password && <span style={{color:'red'}}>{errors.password}</span>}<br/><br/>
-                <input type="submit" value='Register !'/><br/>
+                <div className="form-group">
+                    <input type="text" name="username" value={username} placeholder="Enter Your User-Name..." onChange={handleChange}/><br/>
+                    {errors.username && <span style={{color:'red'}}>{errors.username}</span>}<br/><br/>
+                </div>
+                <div className="form-group">
+                    <input type="text" name="email" value={email} placeholder="Enter Your E-Mail..." onChange={handleChange}/><br/>
+                    <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small><br/>
+                    {errors.email && <span style={{color:'red'}}>{errors.email}</span>}<br/><br/>
+                </div>
+                    <div className="form-group">
+                    <input type="password" name="password" value={password} placeholder="Enter Your Password..." onChange={handleChange}/><br/>
+                    {errors.password && <span style={{color:'red'}}>{errors.password}</span>}<br/><br/>
+                </div>
+                <div className="form-group">
+                    <input className='btn btn-secondary' type="submit" value='Register !'/><br/>
+                </div>
             </form>
         </div>
     );

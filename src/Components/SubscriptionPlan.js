@@ -1,7 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import Swal from 'sweetalert2';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import SubscriptionForm from './SubscriptionForm';
 
@@ -33,7 +35,6 @@ const SubscriptionPlan = (props)=>
                     if(resultTemp)
                     {
                         setPlan(resultTemp);
-                        setRefresh(false);
                     }
 
                     const resultSubscriber = subscriberTemp.data;
@@ -51,8 +52,87 @@ const SubscriptionPlan = (props)=>
         }
     }, [refresh])
 
+    async function handleDelete(inputId)
+    {
+        try
+        {
+            const check = Swal.fire('Are You Sure ?');
+            if(check)
+            {
+                const temp = await axios.delete(`http://localhost:3997/api/subscription-plans/${inputId}`, {headers:{'authorization': token}});
+                const resultTemp = temp.data; 
+                if(resultTemp._id === inputId)
+                {
+                    Swal.fire('Successfully Deleted your plan !');
+                    setPlan({});
+                }
+                else
+                {
+                    Swal.fire('Error while deleting your plan. Please try again later !');
+                }
+            }
+            else
+            {
+                Swal.fire('You Pack is Safe !');
+            }
+        }
+        catch(err)
+        {
+            console.log(err);
+        }
+        
+    }
+
+    async function handleEdit(inputId)
+    {
+        try
+        {
+            var amount; 
+            const { value: name } = await Swal.fire({
+                title: 'Input New Pack Name',
+                input: 'text',
+                inputLabel: 'Your Pack Name',
+                inputPlaceholder: 'Enter your Pack Name'
+            });
+
+            if(name && name.length > 0)
+            {
+                var amount = await Swal.fire({
+                    title: 'Input New Amount',
+                    input: 'number',
+                    inputLabel: 'Your New Amount',
+                    inputPlaceholder: 'Enter your Pack Amount'
+                });   
+                amount = amount.value;    
+            }
+            else
+            {
+                Swal.fire('Name cannot be empty!')   
+            }   
+
+            
+            if(name && amount)
+            {
+                const temp = await axios.put(`http://localhost:3997/api/subscription/update/${inputId}`, {name: name, amount: amount}, {headers: {'authorization': token}});
+                const result = temp.data; 
+                if(result.hasOwnProperty('name'))
+                {
+                    setPlan(result);
+                }
+                else
+                {
+                    Swal.fire('Error while updating the plan! Please try later.');
+                }
+            }
+        }
+        catch(err)
+        {
+            Swal.fire('Error while updating, please try later!');
+        }
+    }
+
     return(
-        <div>
+        <div className='container text-center'>
             <h2>Manage Your Subscriptions</h2>
             <p>
                 Welcome - Simplify Your Subscription Management! Manage, renew, and optimize all your subscriptions in one place.
@@ -63,6 +143,8 @@ const SubscriptionPlan = (props)=>
                     You have created one plan. Here are the details of your subscription plan.<br/><br/>
                     <em>Plan Name</em> : <b>{plan.name}</b><br/>
                     <em>Plan Amount</em> : <b>{plan.amount}</b><br/><br/>
+                    <button className='btn btn-dark' onClick={()=>{handleDelete(plan._id)}}>Delete Your Pack</button>
+                    <button className='btn btn-secondary' onClick={()=>{handleEdit(plan._id)}}>Edit your Pack</button><br/><br/>
                     {
                         subscribers.length > 0 ?
                         <>

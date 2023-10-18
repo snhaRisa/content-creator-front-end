@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux'; 
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import { startCreatePlan } from '../Actions/usersAction';
 
@@ -77,13 +78,19 @@ const SubscriptionForm = (props)=>
     }
 
     return(
-        <div>
-            <form onSubmit={handleSubmit}>
-                <input type='text' name='planName' value={planName} placeholder='Enter plan name...' onChange={handleChange}/>
-                {errors.planName && <span style={{color:'red'}}>{errors.planName}</span>}
-                <input type='number' name='planAmount' min={1} value={planAmount} placeholder='Enter amount...' onChange={handleChange}/>
-                {errors.planAmount && <span style={{color:'red'}}>{errors.planAmount}</span>}
-                <input type='submit' value={'Make your plan'}/>
+        <div className='container mt-2'>
+            <form className='form-group' onSubmit={handleSubmit}>
+                <div className='form-group-item'>
+                <input type='text' name='planName' value={planName} placeholder='Enter plan name...' onChange={handleChange}/><br/>
+                {errors.planName && <span style={{color:'red'}}>{errors.planName}</span>}<br/><br/>
+                </div>
+                <div className='form-group-item'>
+                <input type='number' name='planAmount' min={1} value={planAmount} placeholder='Enter amount...' onChange={handleChange}/><br/>
+                {errors.planAmount && <span style={{color:'red'}}>{errors.planAmount}</span>}<br/>
+                </div>
+                <div className='form-group-item'>
+                <input className='btn btn-secondary' type='submit' value={'Make your plan'}/>
+                </div>
             </form><br/>
         </div>
     );
