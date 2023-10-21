@@ -10,7 +10,7 @@ export const startRegisterUser = (inputObj, resetForm, history)=>
         {
             const temp = await axios.post(`http://localhost:3997/api/users/register`, inputObj);
             const result = temp.data; 
-            
+
             if(result.hasOwnProperty('username'))
             {
                 resetForm();
@@ -20,6 +20,7 @@ export const startRegisterUser = (inputObj, resetForm, history)=>
             else
             {
                 Swal.fire(result.error);
+                resetForm();
             }
         }
         catch(err)
@@ -39,7 +40,7 @@ export const startRegisterCreator = (inputObj, resetForm, history)=>
         {
             const temp = await axios.post(`http://localhost:3997/api/creator`, inputObj, {headers:{'authorization': localStorage.getItem('token')}}); 
             const result = temp.data; 
-
+            console.log(result);
             if(result.hasOwnProperty('bio'))
             {
                 Swal.fire('You are now a Creator !!');
@@ -48,7 +49,7 @@ export const startRegisterCreator = (inputObj, resetForm, history)=>
             }
             else
             {
-                Swal.fire('Error! Please try again.');
+                Swal.fire(result);
             }
         }
         catch(err)

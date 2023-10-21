@@ -1,6 +1,6 @@
 const initialState = {
   content: [],
-}
+};
 
 const contentReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -17,17 +17,19 @@ const contentReducer = (state = initialState, action) => {
     }
     case 'ADD_LIKE': {
       const updatedContent = state.content.map((contentItem) => {
-        if (contentItem._id == action.payload._id) {
+        if (contentItem._id === action.payload._id) {
           return { ...contentItem, ...action.payload }
         } else {
           return { ...contentItem }
         }
       }
       );
+      console.log(updatedContent);
       return {
         ...state,
         content: updatedContent,
       };
+      
     }
 
 
@@ -47,7 +49,7 @@ const contentReducer = (state = initialState, action) => {
   
     case 'ADD_COMMENT': {
       console.log('add comment', action.payload)
-      const { postId, body } = action.payload;
+      const { postId } = action.payload;
       const updatedContent = state.content.map((content) => {
         console.log(content)
         if (content._id === postId) {

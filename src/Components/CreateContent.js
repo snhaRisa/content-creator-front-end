@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createContent } from "../Actions/newContentAction";
 import jwt_decode from "jwt-decode";
 
@@ -8,6 +8,11 @@ const CreateContent = () => {
     const [form, setForm] = useState({ title: "", body: "", type: "", id: "", fileType: "" });
     const [fileType, setFileType] = useState(null);
     const [id, setID] = useState(jwt_decode(localStorage.getItem('token')));
+
+    const user = useSelector((state)=>
+    {
+        return state.users.data;
+    });
 
     const handleIdChange = (e) => {
         const idInput = e.target.value;
@@ -22,7 +27,7 @@ const CreateContent = () => {
         formData.append('title', form.title);
         formData.append('body', form.body);
         formData.append('type', form.type);
-        formData.append('id', id._id);
+        formData.append('id', user._id);
 
         // Append the file if it exists
         if (fileType) {
