@@ -5,6 +5,7 @@ import axios from 'axios';
 import { addUser } from "../Actions/usersAction";
 import UserAccount from './UserAccount';
 import CreatorAccount from "./CreatorAccount";
+import AdminAccount from "./AdminAccount";
 
 const AccountContainer = (props)=>
 {
@@ -36,7 +37,7 @@ const AccountContainer = (props)=>
                             setRefresh(false);
                         }
                     }
-                    else if(userTemp.data.hasOwnProperty('role') && userTemp.data.role === 'user')
+                    else if(userTemp.data.hasOwnProperty('role'))
                     {
                         dispatch(addUser(userTemp.data));
                         setRefresh(false);
@@ -56,7 +57,10 @@ const AccountContainer = (props)=>
                 user.data.role === 'user' ?
                 <UserAccount/>
                 :
-                <CreatorAccount/>
+                user.data.bio ?
+                    <CreatorAccount/>
+                    :
+                    <AdminAccount user={user.data}/>
             }
         </div>
     );

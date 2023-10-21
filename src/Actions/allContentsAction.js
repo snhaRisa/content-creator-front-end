@@ -43,7 +43,7 @@ export const addLikeAsync = (contentId) => {
 
         const data = response.data;
         console.log(data, 'data')
-        dispatch(addLikeSuccess(data));
+        dispatch(addLikeSuccess(data.content));
       }
     }
     catch (error) {

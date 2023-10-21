@@ -5,9 +5,20 @@ Bugs & Fixes;
 
 Payment Integration;  DONE.
 Rich Text Integration; DONE.
-npm corn or forever;    PENDING;
-Admin Role Creation;    PENDING; 
-Payment CHECK logic;    PENDING;
-Add Subscribers;        PENDING; 
-Add Money Earnings;     PENDING;
+npm corn or forever;    PENDING, Not Important;
+Admin Role Creation;    DONE.
+Payment CHECK logic;    DONE.
+Add Subscribers on Dashboard;        PENDING, Important; 
+Add Money Earnings on Dashboard;     PENDING, Important;
 Post Creation only by Creator; PENDING;
+
+Create Post Forms. isSubscribed?
+Content View Page. 
+
+Admin creation. 
+Styling. 
+BackEnds. 
+Subscriber. 
+Money. 
+Posting Contents Only by Creators. 
+

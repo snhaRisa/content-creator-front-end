@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import {useSelector} from 'react-redux';
+import Swal from 'sweetalert2';
 
 const PaymentButton = (props)=>
 {
@@ -16,16 +17,25 @@ const PaymentButton = (props)=>
         try
         {
             const userId = user._id || user.userId._id 
-
             const getDataTemp = await axios.get(`http://localhost:3997/payment-get-data?userId=${userId}&&contentId=${contentId}`);
             const getData = getDataTemp.data; 
 
-            const temp = await axios.post(`http://localhost:3997/payment-checkout`, getData, {headers:{'authorization':token, 'Content-Type': 'application/json'}});
-            const result = temp.data; 
-
-            if(result.hasOwnProperty('url'))
+            if(getData === "Error while finding the Plan!")
             {
-                window.location = result.url; 
+                Swal.fire(getData);
+            }
+            else
+            {
+                const temp = await axios.post(`http://localhost:3997/payment-checkout`, getData, {headers:{'authorization':token, 'Content-Type': 'application/json'}});
+                const result = temp.data; 
+                if(result.hasOwnProperty('url'))
+                {
+                    window.location = result.url; 
+                }
+                else
+                {
+                    Swal.fire(result);
+                }
             }
         }
         catch(err)
@@ -36,8 +46,8 @@ const PaymentButton = (props)=>
 
     return(
         <>
-            <button className='btn btn-dark'
-                onClick={()=>{handleCheckout('652ce6c041cac4c186dc795a')}}>
+            <button className='btn btn-dark' //just pass the contentId. 
+                onClick={()=>{handleCheckout('6530ffb035a21e580158d7bb')}}>
                 Buy the Subscription.
             </button>
         </>

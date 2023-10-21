@@ -22,7 +22,7 @@ const ContentItem = ({ content }) => {
     }
 
     const handleLikeClick = (contentId) => {
-        const userId = userData._id
+
         if (check) {
             console.log({ re: contentId, })
             dispatch(removeLikeAsync(contentId))
@@ -101,7 +101,7 @@ const Home = () => {
             {content.map((contentItem) => (
                 < div key={contentItem._id} >
                     <h4>{contentItem?.creatorId?.username}</h4>
-                    {contentItem.type == 'image' ? <img src={contentItem.fileType}
+                    {contentItem.type === 'image' ? <img src={contentItem.fileType} alt={`content${contentItem.type}`}
                         style={{ width: "200px", height: "200px" }}
                     /> :
                         <video controls width={200}>
