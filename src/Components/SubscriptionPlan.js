@@ -56,31 +56,18 @@ const SubscriptionPlan = (props)=>
     {
         try
         {
-            const check = Swal.fire('Are You Sure ?');
-            if(check)
+            const temp = await axios.delete(`http://localhost:3997/api/subscription-plans/${inputId}`, {headers:{'authorization': token}});
+            const resultTemp = temp.data; 
+            if(resultTemp._id === inputId)
             {
-                const temp = await axios.delete(`http://localhost:3997/api/subscription-plans/${inputId}`, {headers:{'authorization': token}});
-                const resultTemp = temp.data; 
-                if(resultTemp._id === inputId)
-                {
-                    Swal.fire('Successfully Deleted your plan !');
-                    setPlan({});
-                }
-                else
-                {
-                    Swal.fire('Error while deleting your plan. Please try again later !');
-                }
-            }
-            else
-            {
-                Swal.fire('You Pack is Safe !');
+                Swal.fire('Successfully Deleted your plan !');
+                setPlan({});
             }
         }
         catch(err)
         {
             console.log(err);
         }
-        
     }
 
     async function handleEdit(inputId)
