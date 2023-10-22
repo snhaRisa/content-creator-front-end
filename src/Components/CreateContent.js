@@ -35,6 +35,7 @@ const CreateContent = () => {
             formData.append('fileType', fileType);
         }
 
+        console.log(formData);
         dispatch(createContent(formData));
 
         // Clear the form fields
