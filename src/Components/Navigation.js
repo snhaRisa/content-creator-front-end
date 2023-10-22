@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, Route } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import "bootstrap/dist/css/bootstrap.min.css";
 import Swal from 'sweetalert2';
 
@@ -21,6 +21,11 @@ const Navigation = (props) => {
     const { isLog, handleIsLog } = props
     const dispatch = useDispatch()
 
+    const user = useSelector((state)=>
+    {
+        return state.users.data;
+    });
+
     return (
         <div className='container md-5 pd-2'>
             <ul className='nav' style={{ backgroundColor: 'white' }}>
@@ -28,7 +33,7 @@ const Navigation = (props) => {
                 {
                     isLog ?
                         <>
-                            <li><Link to='/post-content' className='nav-link' style={{ color: 'brown' }}>Create Content</Link></li>
+                            {user.bio && <li><Link to='/post-content' className='nav-link' style={{ color: 'brown' }}>Create Content</Link></li>}
                             <li><Link to='/account' className='nav-link' style={{ color: 'brown' }}>Account</Link></li>
                             <li><Link to='/' style={{ color: 'brown' }} onClick={() => {
                                 localStorage.removeItem('token');
@@ -36,7 +41,6 @@ const Navigation = (props) => {
                                 dispatch(removeUser());
                                 Swal.fire('Successfully Logged-Out!');
                             }} className='nav-link'>Logout</Link></li>
-
                         </>
                         :
                         <>
