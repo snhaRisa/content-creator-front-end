@@ -11,7 +11,7 @@ import SubscriptionForm from './SubscriptionForm';
 const SubscriptionPlan = (props)=>
 { 
     const [plan, setPlan] = useState({});
-    const [subscribers, setSubscribers] = useState([]);
+    const [subscribers, setSubscribers] = useState({});
     const [refresh, setRefresh] = useState(true);
     const token = localStorage.getItem('token');
 
@@ -118,8 +118,9 @@ const SubscriptionPlan = (props)=>
         }
     }
 
+
     return(
-        <div className='container text-center'>
+        <div className='container text-center mt-5'>
             <h2>Manage Your Subscriptions</h2>
             <p>
                 Welcome - Simplify Your Subscription Management! Manage, renew, and optimize all your subscriptions in one place.
@@ -133,10 +134,10 @@ const SubscriptionPlan = (props)=>
                     <button className='btn btn-dark' onClick={()=>{handleDelete(plan._id)}}>Delete Your Pack</button>
                     <button className='btn btn-secondary' onClick={()=>{handleEdit(plan._id)}}>Edit your Pack</button><br/><br/>
                     {
-                        subscribers.length > 0 ?
+                        Object.keys(subscribers).length > 0 ?
                         <>
-                            <em>Total Subscribers : <b>{subscribers.length}</b></em><br/>
-                            <em>Total Income : <b>{subscribers.length * plan.amount}</b></em>
+                            <em><strong>Total Subscribers : {subscribers.subscribers.length}</strong></em><br/>
+                            <em><strong>Total Income : {subscribers.subscribers.length * plan.amount}</strong></em>
                         </>
                         :
                         <>
@@ -154,7 +155,7 @@ const SubscriptionPlan = (props)=>
                     <SubscriptionForm/>
                 </>
             }
-            <Link to='/account'>Back to Dashboard</Link>
+            <Link to='/account' className='btn btn-danger'>Back to Dashboard</Link>
         </div>
     );
 };

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { createContent } from "../Actions/newContentAction";
 import jwt_decode from "jwt-decode";
+import PostContentForm from "./PostContentForm";
 
 const CreateContent = () => {
     const dispatch = useDispatch();
@@ -101,6 +102,7 @@ const CreateContent = () => {
                 <br />
                 <button type="submit">Post</button>
             </form>
+            <PostContentForm/>
         </div>
     );
 };
