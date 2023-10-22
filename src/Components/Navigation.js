@@ -11,7 +11,7 @@ import Register from './Register';
 import Login from './Login';
 import AccountContainer from './AccountContainer';
 import CreatorForm from './CreatorForm';
-import CreateContent from './CreateContent'
+import PostContentForm from './PostContentForm';
 import SubscriptionPlan from './SubscriptionPlan';
 import Success from './Success';
 import Cancel from './Cancel';
@@ -33,7 +33,7 @@ const Navigation = (props) => {
                 {
                     isLog ?
                         <>
-                            {user.bio && <li><Link to='/post-content' className='nav-link' style={{ color: 'brown' }}>Create Content</Link></li>}
+                            {user.bio && <li><Link to='/post-content' className='nav-link' style={{ color: 'brown' }}>Post Content</Link></li>}
                             <li><Link to='/account' className='nav-link' style={{ color: 'brown' }}>Account</Link></li>
                             <li><Link to='/' style={{ color: 'brown' }} onClick={() => {
                                 localStorage.removeItem('token');
@@ -57,7 +57,7 @@ const Navigation = (props) => {
             <PrivateRoute path='/create-plans' component={SubscriptionPlan} exact={true} />
             <PrivateRoute path='/success' component={Success} exact={true} />
             <PrivateRoute path='/cancel' component={Cancel} exact={true} />
-            <PrivateRoute path='/post-content' component={CreateContent} exact={true} />
+            <PrivateRoute path='/post-content' component={PostContentForm} exact={true} />
         </div>
     );
 };

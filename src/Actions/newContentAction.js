@@ -1,8 +1,8 @@
 import axios from "axios";
 
 
-export const createContent = (formData) => {
-  console.log(formData, 'in redux')
+export const createContent = (formData, resetForm) => {
+
   return async (dispatch) => {
     try {
       const token = localStorage.getItem("token");
@@ -10,22 +10,16 @@ export const createContent = (formData) => {
       if (!token) {
         throw new Error("No token found in localStorage");
       }
-      // const config = {
-      //   headers: {
-      //   'Content-Type': 'multipart/form-data'
-      //   },
-      // };
-      // console.log(config)
 
       const response = await axios.post(`http://localhost:3997/api/content/create`, formData, { headers: { 'authorization': localStorage.getItem('token') } });
-      console.log(response.data, 'response data')
-      dispatch(content(response.data))
-
-      // Dispatch an action if needed (you might want to update your Redux state)
-      // For example, dispatch an action to update the content list with the new content
-      //   dispatch({ type: "CONTENT_CREATED", payload: response.data });
-      console.log(response);
-    } catch (e) {
+      if(response.data.hasOwnProperty('title'))
+      {
+        dispatch(content(response.data));
+        resetForm();
+      }
+    } 
+    catch (e) 
+    {
       console.log(e.message);
     }
   };
