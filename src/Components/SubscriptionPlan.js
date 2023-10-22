@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Link, useLocation} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import Swal from 'sweetalert2';
@@ -84,7 +84,7 @@ const SubscriptionPlan = (props)=>
 
             if(name && name.length > 0)
             {
-                var amount = await Swal.fire({
+                amount = await Swal.fire({
                     title: 'Input New Amount',
                     input: 'number',
                     inputLabel: 'Your New Amount',
