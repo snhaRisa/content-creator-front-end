@@ -19,7 +19,7 @@ export const createContent = (formData) => {
 
       const response = await axios.post(`http://localhost:3997/api/content/create`, formData, { headers: { 'authorization': localStorage.getItem('token') } });
       console.log(response.data, 'response data')
-      dispatch(content(response.data))
+      dispatch(addContent(response.data))
 
       // Dispatch an action if needed (you might want to update your Redux state)
       // For example, dispatch an action to update the content list with the new content
@@ -32,10 +32,10 @@ export const createContent = (formData) => {
 };
 
 
-export const content = (data) => {
+export const addContent = (data) => {
   return {
-    type: 'NEW_CONTENT',
-    payload: data
+    type: 'ADD_CONTENT',
+    payload: data,
   }
 }
 
@@ -64,10 +64,10 @@ export const deleteContent = (id) => {
   return async (dispatch) => {
     console.log(id, 'content id ')
     try {
-      const response = await axios.delete(`http://localhost:3997/api/content/${id}`, 
-      { 
-        headers: { 'authorization': localStorage.getItem('token') } 
-    })
+      const response = await axios.delete(`http://localhost:3997/api/content/${id}`,
+        {
+          headers: { 'authorization': localStorage.getItem('token') }
+        })
       console.log(response.data, 'data')
       dispatch(removeContent(response.data))
     } catch (e) {

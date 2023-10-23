@@ -6,23 +6,22 @@ import PostContentForm from "./PostContentForm";
 
 const CreateContent = () => {
     const dispatch = useDispatch();
-    const [form, setForm] = useState({ title: "", body: "", type: "", id: "", fileType: "" });
+    const [form, setForm] = useState({ title: "", body: "", type: "", fileType: "" });
     const [fileType, setFileType] = useState(null);
     const [id, setID] = useState(jwt_decode(localStorage.getItem('token')));
 
-    const user = useSelector((state)=>
-    {
-        return state.users.data;
+    const user = useSelector((state) => {
+        return state.users.data
     });
 
     const handleIdChange = (e) => {
-        const idInput = e.target.value;
+        const idInput = e.target.value
         setID(idInput);
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const id = jwt_decode(localStorage.getItem('token'));
+        const id = jwt_decode(localStorage.getItem('token'))
 
         const formData = new FormData();
         formData.append('title', form.title);
@@ -32,13 +31,13 @@ const CreateContent = () => {
 
         // Append the file if it exists
         if (fileType) {
-            formData.append('fileType', fileType);
+            formData.append('fileType', fileType)
         }
 
         dispatch(createContent(formData));
 
         // Clear the form fields
-        setForm({ title: "", body: "", type: "", id: "" });
+        setForm({ title: "", body: "", type: "", id: "" })
         setFileType(null);
     };
 
@@ -47,7 +46,7 @@ const CreateContent = () => {
             const fileInput = e.target.files[0];
             setFileType(fileInput);
         }
-        setForm({ ...form, [e.target.name]: e.target.value });
+        setForm({ ...form, [e.target.name]: e.target.value })
     }
 
     return (
@@ -102,7 +101,7 @@ const CreateContent = () => {
                 <br />
                 <button type="submit">Post</button>
             </form>
-            <PostContentForm/>
+            <PostContentForm />
         </div>
     );
 };

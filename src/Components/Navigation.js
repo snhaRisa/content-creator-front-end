@@ -16,13 +16,12 @@ import SubscriptionPlan from './SubscriptionPlan';
 import Success from './Success';
 import Cancel from './Cancel';
 import PrivateRoute from './PrivateRoute'
-
+import SingleImagePage from './imagePage';
 const Navigation = (props) => {
     const { isLog, handleIsLog } = props
     const dispatch = useDispatch()
 
-    const user = useSelector((state)=>
-    {
+    const user = useSelector((state) => {
         return state.users.data;
     });
 
@@ -52,12 +51,14 @@ const Navigation = (props) => {
             <Route path='/' component={Home} exact={true} />
             <Route path='/register' component={Register} exact={true} />
             <Route path='/login' render={(props) => { return <Login {...props} handleIsLog={handleIsLog} /> }} exact={true} />
+            <Route path='/single-image/:id' component={SingleImagePage} exact={true} />
             <PrivateRoute path='/account' component={AccountContainer} exact={true} />
             <PrivateRoute path='/change-to-creator' component={CreatorForm} exact={true} />
             <PrivateRoute path='/create-plans' component={SubscriptionPlan} exact={true} />
             <PrivateRoute path='/success' component={Success} exact={true} />
             <PrivateRoute path='/cancel' component={Cancel} exact={true} />
             <PrivateRoute path='/post-content' component={CreateContent} exact={true} />
+            {/* <PrivateRoute path='/content-page' component={ContentPage} /> */}
         </div>
     );
 };

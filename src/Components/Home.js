@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { showContent, addComment, removeLikeAsync, addLikeAsync, deleteComment } from "../Actions/allContentsAction"
 import { deleteContent } from "../Actions/newContentAction"
+import { Link } from "react-router-dom/cjs/react-router-dom.min"
+
 
 const ContentItem = ({ content }) => {
     const dispatch = useDispatch()
@@ -31,15 +33,16 @@ const ContentItem = ({ content }) => {
             dispatch(addLikeAsync(contentId))
         }
         dispatch(showContent())
-      
-        }
-        const handleRemoveComment = (commentId, postId) => {
-            dispatch(deleteComment(commentId, postId))
-        }
-        const handleDeleteContent = (id) => {
-            dispatch(deleteContent(id))
-            dispatch(showContent())
-        }
+
+    }
+    const handleRemoveComment = (commentId, postId) => {
+        dispatch(deleteComment(commentId, postId))
+    }
+    const handleDeleteContent = (id) => {
+        dispatch(deleteContent(id))
+        dispatch(showContent())
+    }
+
     return (
         <div>
             {content?.body}
@@ -49,6 +52,7 @@ const ContentItem = ({ content }) => {
                 </button>
                 <button onClick={() => handleDeleteContent(content._id)}>remove</button>
                 {content?.likes?.length}
+
             </p>
             <div>
                 <ul>
@@ -91,25 +95,28 @@ const Home = () => {
     }, [dispatch])
 
     const content = useSelector((state) => state.content.content)
-    console.log(content, 'content')
 
     if (!content || content.length === 0) {
         return <div>Loading or no content available...</div>
     }
+    console.log(content, 'homepage-content')
     return (
         <div>
             {content.map((contentItem) => (
                 < div key={contentItem._id} >
-                    <h4>{contentItem?.creatorId?.username}</h4>
-                    {contentItem.type === 'image' ? <img src={contentItem.fileType} alt={`content${contentItem.type}`}
-                        style={{ width: "600px", height: "400px" }}
-                    /> :
-                        <video controls width={200}>
-                            <source src={contentItem.fileType} />
-                        </video>
-                    }
+                    <Link to={`/single-image/${contentItem._id}`} >
+                        <h4>{contentItem?.creatorId?.username}</h4>
+                        {contentItem.type === 'image' ? <img src={contentItem.fileType} alt={`content${contentItem.type}`}
+                            style={{ width: "600px", height: "400px" }}
+                        /> :
+                            <video controls width={200}>
+                                <source src={contentItem.fileType} />
+                            </video>
+                        }
+                    </Link>
                     <ContentItem content={contentItem} />
                 </div>
+
             ))
             }
         </div >
