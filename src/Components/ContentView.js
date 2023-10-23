@@ -55,7 +55,7 @@ const ContentView = (props)=>
                 Swal.fire(err.message);
             }
         })()
-    },[contentId]);
+    },[]);
 
     async function handleCheckout(contentId)
     {
@@ -92,12 +92,12 @@ const ContentView = (props)=>
     //check if user is subscribed, or the user is the creator. Then check if the content is for subscribers or not. 
     //if isVisible is true you show to subscribers only.
     return(
-        <div className='container text-center mt-5'>
-            <div className='card mt-3 md-2 text-white bg-dark mb-3 border-danger'>
-                <div className='card-header'>
-                    <h6 className='text-left'>{ creator && creator.userId && creator.userId.username}</h6>
+        <div>
+            <div>
+                <div>
+                    <h6>{ creator && creator.userId && creator.userId.username}</h6>
                 </div>
-                <h5 className='card-title'>{singleContent.title}</h5>
+                <h5>{singleContent.title}</h5>
                 {
                     singleContent.type === 'image' ? 
                     (
@@ -110,14 +110,14 @@ const ContentView = (props)=>
                         </video>
                     )
                 }
-                <p className='card-text mt-3'>
+                <p>
                     {singleContent.body}
                 </p>
-                <div className='btn-group btn-group-sm'>
-                    <button className='btn btn-secondary'>Likes : {singleContent && singleContent.likes && singleContent.likes.length}</button>
-                    <button className='btn btn-secondary'>Add Comments</button>
-                    <button className='btn btn-secondary'>Follow Creator</button>
-                    <button className='btn btn-secondary' onClick={()=>{handleCheckout(singleContent._id)}}>Subscribe To Creator</button>
+                <div>
+                    <button>Likes : {singleContent && singleContent.likes && singleContent.likes.length}</button>
+                    <button>Add Comments</button>
+                    <button>Follow Creator</button>
+                    <button onClick={()=>{handleCheckout(singleContent._id)}}>Subscribe To Creator</button>
                 </div>
             </div>
         </div>
