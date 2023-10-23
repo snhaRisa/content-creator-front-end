@@ -5,7 +5,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Swal from 'sweetalert2';
 
 import { removeUser } from '../Actions/usersAction';
-// import { createContent } from '../Actions/newContentAction';
 import Home from './Home';
 import Register from './Register';
 import Login from './Login';
@@ -15,12 +14,15 @@ import PostContentForm from './PostContentForm';
 import SubscriptionPlan from './SubscriptionPlan';
 import Success from './Success';
 import Cancel from './Cancel';
-import PrivateRoute from './PrivateRoute'
+import ContentView from './ContentView';
+import PrivateRoute from './PrivateRoute';
 
-const Navigation = (props) => {
+const Navigation = (props) => 
+{
     const { isLog, handleIsLog } = props
-    const dispatch = useDispatch()
 
+    const dispatch = useDispatch();
+    
     const user = useSelector((state)=>
     {
         return state.users.data;
@@ -58,6 +60,7 @@ const Navigation = (props) => {
             <PrivateRoute path='/success' component={Success} exact={true} />
             <PrivateRoute path='/cancel' component={Cancel} exact={true} />
             <PrivateRoute path='/post-content' component={PostContentForm} exact={true} />
+            <PrivateRoute path='/content-view/:contentId' component={ContentView} exact={true}/>
         </div>
     );
 };

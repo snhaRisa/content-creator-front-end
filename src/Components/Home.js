@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { showContent, addComment, removeLikeAsync, addLikeAsync, deleteComment } from "../Actions/allContentsAction"
 import { deleteContent } from "../Actions/newContentAction"
+import TestHomePage from "./TestHomePage"
 
 const ContentItem = ({ content }) => {
     const dispatch = useDispatch()
@@ -83,6 +84,7 @@ const ContentItem = ({ content }) => {
         </div>
     );
 }
+
 const Home = () => {
     const dispatch = useDispatch()
 
@@ -98,20 +100,7 @@ const Home = () => {
     }
     return (
         <div>
-            {content.map((contentItem) => (
-                < div key={contentItem._id} >
-                    <h4>{contentItem?.creatorId?.username}</h4>
-                    {contentItem.type === 'image' ? <img src={contentItem.fileType} alt={`content${contentItem.type}`}
-                        style={{ width: "600px", height: "400px" }}
-                    /> :
-                        <video controls width={200}>
-                            <source src={contentItem.fileType} />
-                        </video>
-                    }
-                    <ContentItem content={contentItem} />
-                </div>
-            ))
-            }
+            <TestHomePage/>
         </div >
     )
 }

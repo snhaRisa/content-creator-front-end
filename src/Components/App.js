@@ -4,7 +4,6 @@ import axios from 'axios';
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import Navigation from './Navigation';
-import PaymentButton from './PaymentButton';
 import { addUser } from '../Actions/usersAction';
 
 const App = (props)=>
@@ -65,7 +64,6 @@ const App = (props)=>
                 <h1 className="display-5 mt-5 mb-5 pd-3" style={{color: 'brown'}}>Content Creation</h1>
             </div>
             <Navigation isLog={isLog} handleIsLog={handleIsLog} />
-            <PaymentButton />
         </div>
     );
 };

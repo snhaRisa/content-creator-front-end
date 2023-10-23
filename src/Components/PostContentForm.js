@@ -103,6 +103,7 @@ const PostContentForm = (props) =>
             {
                 formDataObject.append(key, formData[key]);
             };
+            console.log(formDataObject);
             dispatch(createContent(formDataObject, resetForm));
         };
     };
