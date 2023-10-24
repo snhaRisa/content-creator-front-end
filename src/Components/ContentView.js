@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { useParams } from 'react-router-dom/cjs/react-router-dom.min';
+import { useParams, Link } from 'react-router-dom/cjs/react-router-dom.min';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import axios from 'axios';
@@ -296,62 +296,62 @@ const ContentView = (props)=>
         }
     };
 
-    //check if user is subscribed, or the user is the creator. Then check if the content is for subscribers or not. 
-    //if isVisible is true you show to subscribers only.
     return(
-        <div>
+        <div className='container'>
             {
                 !isExclusive ?
-                    <div>
-                        <h3>{singleContent.title}</h3>
-                        <p>
+                    <div className='card text-white bg-dark mt-5'>
+                        <h3 className='card-title text-center mt-2'>{singleContent.title}</h3>
+                        {singleContent.type === 'image' ? 
+                        (
+                            <img className="card-img-top" src={singleContent.fileType} alt={singleContent.title} />
+                        ) 
+                        : 
+                        (
+                            <video className='card-img-top' controls width="100%" style={{ height: 'auto' }}>
+                                <source src={singleContent.fileType} />
+                            </video>
+                        )}
+                        <p className='card-body mt-3'>
                             {singleContent.body}
                             All can see the Content
                         </p>
-                        {singleContent.type === 'image' ? 
-                        (
-                            <img className="card-img-top" style={{width:'400px', height: '400px'}} src={singleContent.fileType} alt={singleContent.title} />
-                        ) 
-                        : 
-                        (
-                            <video controls width="100%" style={{ height: 'auto' }}>
-                                <source src={singleContent.fileType} />
-                            </video>
-                        )}
-                        <div>
+                        <div className='btn-group'>
                             {
                                 isLiked ?
-                                    <button onClick={()=>{handleUnLike(user._id, singleContent._id)}}>Un-Like : {singleContent && singleContent.likes && singleContent.likes.length}</button>
+                                    <button className='btn btn-secondary btn-sm' onClick={()=>{handleUnLike(user._id, singleContent._id)}}>Unlike : {singleContent && singleContent.likes && singleContent.likes.length}</button>
                                     :
-                                    <button onClick={()=>{handleLike(user._id, singleContent._id)}}>Like : {singleContent && singleContent.likes && singleContent.likes.length}</button>
+                                    <button className='btn btn-secondary btn-sm' onClick={()=>{handleLike(user._id, singleContent._id)}}>Like : {singleContent && singleContent.likes && singleContent.likes.length}</button>
                             }
-                            <button onClick={()=>{handleAddComment(user._id, singleContent._id)}}>Add Comment</button>
+                            <button className='btn btn-secondary btn-sm' onClick={()=>{handleAddComment(user._id, singleContent._id)}}>Add Comment</button>
                             {
                                 isFollower ?
-                                    <button onClick={()=>{handleUnFollow(user._id, creator._id)}} style={{color:'red'}}>Un-follow Creator</button>
+                                    <button className='btn btn-secondary btn-sm' onClick={()=>{handleUnFollow(user._id, creator._id)}}>Un-follow Creator</button>
                                     :
-                                    <button onClick={()=>{handleFollow(user._id, creator._id)}}>Follow Creator</button>
+                                    <button className='btn btn-secondary btn-sm' onClick={()=>{handleFollow(user._id, creator._id)}}>Follow Creator</button>
                             }
                             {
                                 isSubscribed ?
-                                    <button disabled={true}>Subscribed</button>
+                                    <button className='btn btn-secondary btn-sm' disabled={true}>Subscribed</button>
                                     :
-                                    <button onClick={()=>{handleCheckout(singleContent._id)}}>Subscribe To Creator</button>
+                                    <button className='btn btn-secondary btn-sm' onClick={()=>{handleCheckout(singleContent._id)}}>Subscribe To Creator</button>
                             }
                         </div><br/>
+                        <div className='btn-group mt-3'>
+                            <button className='btn btn-secondary btn-sm' disabled={singleContent && singleContent.comments && singleContent.comments.length === 0} onClick={()=>{setShowComments(!showComments)}}>Show Comments</button>
+                        </div>
                         <div>
-                            <button disabled={singleContent && singleContent.comments && singleContent.comments.length === 0} onClick={()=>{setShowComments(!showComments)}}>Show Comments</button>
                             {
                                 showComments 
                                 &&
-                                <ul>
+                                <ul className='list-group'>
                                     {
                                         singleContent.comments.map((comment)=>
                                         {
-                                            return <li key={comment._id}>
+                                            return <li key={comment._id} className='list-group-item bg-dark text-white'>
                                                         {comment.body}
                                                         {
-                                                            isComment && <button onClick={()=>{handleRemoveComment(comment._id, singleContent._id)}}>Remove Comment</button>
+                                                            isComment && <button className='btn btn-secondary btn-sm' onClick={()=>{handleRemoveComment(comment._id, singleContent._id)}}>Remove Comment</button>
                                                         }
                                                     </li>
                                         })
@@ -359,18 +359,17 @@ const ContentView = (props)=>
                                 </ul> 
                             }
                         </div>
+                        <button className='btn btn-secondary btn-sm mt-3'><Link className='link-danger' to='/'><b>Back To Home-Page</b></Link>
+                        </button>
                     </div>
                     :
                     isSubscribed || isSame ?
-                        <div>
-                        <h3>{singleContent.title}</h3>
-                        <p>
-                            {singleContent.body}
-                            exclusive content.
-                        </p>
+                        <div className='card text-white bg-dark mt-5'>
+                        <h3 className='card-title text-center mt-2'>{singleContent.title}</h3>
+                        
                         {singleContent.type === 'image' ? 
                         (
-                            <img className="card-img-top" style={{width:'400px', height: '400px'}} src={singleContent.fileType} alt={singleContent.title} />
+                            <img className="card-img-top" src={singleContent.fileType} alt={singleContent.title} />
                         ) 
                         : 
                         (
@@ -378,40 +377,46 @@ const ContentView = (props)=>
                                 <source src={singleContent.fileType} />
                             </video>
                         )}
-                        <div>
+                        <p className='card-body mt-3'>
+                            {singleContent.body}
+                            exclusive content.
+                        </p>
+                        <div className='btn-group mt-3'>
                             {
                                 isLiked ?
-                                    <button onClick={()=>{handleUnLike(user._id, singleContent._id)}}>Un-Like : {singleContent && singleContent.likes && singleContent.likes.length}</button>
+                                    <button className='btn btn-secondary btn-sm' onClick={()=>{handleUnLike(user._id, singleContent._id)}}>Un-Like : {singleContent && singleContent.likes && singleContent.likes.length}</button>
                                     :
-                                    <button onClick={()=>{handleLike(user._id, singleContent._id)}}>Like : {singleContent && singleContent.likes && singleContent.likes.length}</button>
+                                    <button className='btn btn-secondary btn-sm' onClick={()=>{handleLike(user._id, singleContent._id)}}>Like : {singleContent && singleContent.likes && singleContent.likes.length}</button>
                             }
-                            <button onClick={()=>{handleAddComment(user._id, singleContent._id)}}>Add Comment</button>
+                            <button className='btn btn-secondary btn-sm' onClick={()=>{handleAddComment(user._id, singleContent._id)}}>Add Comment</button>
                             {
                                 isFollower ?
-                                    <button onClick={()=>{handleUnFollow(user._id, creator._id)}} style={{color:'red'}}>Un-follow Creator</button>
+                                    <button className='btn btn-secondary btn-sm' onClick={()=>{handleUnFollow(user._id, creator._id)}}>Un-follow Creator</button>
                                     :
-                                    <button onClick={()=>{handleFollow(user._id, creator._id)}}>Follow Creator</button>
+                                    <button className='btn btn-secondary btn-sm' onClick={()=>{handleFollow(user._id, creator._id)}}>Follow Creator</button>
                             }
                             {
                                 isSubscribed ?
-                                    <button disabled={true}>Subscribed</button>
+                                    <button className='btn btn-secondary btn-sm' disabled={true}>Subscribed</button>
                                     :
-                                    <button onClick={()=>{handleCheckout(singleContent._id)}}>Subscribe To Creator</button>
+                                    <button className='btn btn-secondary btn-sm' onClick={()=>{handleCheckout(singleContent._id)}}>Subscribe To Creator</button>
                             }
-                        </div><br/>
+                        </div>
+                        <div className='btn-group mt-3'>
+                            <button className='btn btn-secondary btn-sm' disabled={singleContent && singleContent.comments && singleContent.comments.length === 0} onClick={()=>{setShowComments(!showComments)}}>Show Comments</button>
+                        </div>
                         <div>
-                            <button disabled={singleContent && singleContent.comments && singleContent.comments.length === 0} onClick={()=>{setShowComments(!showComments)}}>Show Comments</button>
                             {
                                 showComments 
                                 &&
-                                <ul>
+                                <ul className='list-group'>
                                     {
                                         singleContent.comments.map((comment)=>
                                         {
-                                            return <li key={comment._id}>
+                                            return <li key={comment._id} className='list-group-item bg-dark text-white'>
                                                         {comment.body}
                                                         {
-                                                            isComment && <button onClick={()=>{handleRemoveComment(comment._id, singleContent._id)}}>Remove Comment</button>
+                                                            isComment && <button className='btn btn-secondary btn-sm' onClick={()=>{handleRemoveComment(comment._id, singleContent._id)}}>Remove Comment</button>
                                                         }
                                                     </li>
                                         })
@@ -419,48 +424,54 @@ const ContentView = (props)=>
                                 </ul> 
                             }
                         </div>
+                        <button className='btn btn-secondary btn-sm mt-3'><Link className='link-danger' to='/'><b>Back To Home-Page</b></Link>
+                        </button>
                     </div>
                     :
-                    <div>
-                        <h3>{singleContent.title}</h3>
-                        <p>
+                    <div className='card text-white bg-dark mt-5'>
+                        <h3 className='card-title text-center'>{singleContent.title}</h3>
+                        <p className='card-body'>
                             {singleContent.body}
-                            Subscribe to see the content.
+                            <br/>
+                            Please Subscribe to see exclusive contents from this creator. <br/>
+                            We know you would not regret it !
                         </p>
-                        <div>
+                        <div className='btn-group mt-3'>
                             {
                                 isLiked ?
-                                    <button onClick={()=>{handleUnLike(user._id, singleContent._id)}}>Un-Like : {singleContent && singleContent.likes && singleContent.likes.length}</button>
+                                    <button className='btn btn-secondary btn-sm' onClick={()=>{handleUnLike(user._id, singleContent._id)}}>Un-Like : {singleContent && singleContent.likes && singleContent.likes.length}</button>
                                     :
-                                    <button onClick={()=>{handleLike(user._id, singleContent._id)}}>Like : {singleContent && singleContent.likes && singleContent.likes.length}</button>
+                                    <button className='btn btn-secondary btn-sm' onClick={()=>{handleLike(user._id, singleContent._id)}}>Like : {singleContent && singleContent.likes && singleContent.likes.length}</button>
                             }
-                            <button onClick={()=>{handleAddComment(user._id, singleContent._id)}}>Add Comment</button>
+                            <button className='btn btn-secondary btn-sm' onClick={()=>{handleAddComment(user._id, singleContent._id)}}>Add Comment</button>
                             {
                                 isFollower ?
-                                    <button onClick={()=>{handleUnFollow(user._id, creator._id)}} style={{color:'red'}}>Un-follow Creator</button>
+                                    <button className='btn btn-secondary btn-sm' onClick={()=>{handleUnFollow(user._id, creator._id)}}>Un-follow Creator</button>
                                     :
-                                    <button onClick={()=>{handleFollow(user._id, creator._id)}}>Follow Creator</button>
+                                    <button className='btn btn-secondary btn-sm' onClick={()=>{handleFollow(user._id, creator._id)}}>Follow Creator</button>
                             }
                             {
                                 isSubscribed ?
-                                    <button disabled={true}>Subscribed</button>
+                                    <button className='btn btn-secondary btn-sm' disabled={true}>Subscribed</button>
                                     :
-                                    <button onClick={()=>{handleCheckout(singleContent._id)}}>Subscribe To Creator</button>
+                                    <button className='btn btn-secondary btn-sm' onClick={()=>{handleCheckout(singleContent._id)}}>Subscribe To Creator</button>
                             }
                         </div><br/>
+                        <div className='btn-group mt-3'>
+                            <button className='btn btn-secondary btn-sm' disabled={singleContent && singleContent.comments && singleContent.comments.length === 0} onClick={()=>{setShowComments(!showComments)}}>Show Comments</button>
+                        </div>
                         <div>
-                            <button disabled={singleContent && singleContent.comments && singleContent.comments.length === 0} onClick={()=>{setShowComments(!showComments)}}>Show Comments</button>
                             {
                                 showComments 
                                 &&
-                                <ul>
+                                <ul className='list-group'>
                                     {
                                         singleContent.comments.map((comment)=>
                                         {
-                                            return <li key={comment._id}>
+                                            return <li key={comment._id} className='list-group-item bg-dark text-white'>
                                                         {comment.body}
                                                         {
-                                                            isComment && <button onClick={()=>{handleRemoveComment(comment._id, singleContent._id)}}>Remove Comment</button>
+                                                            isComment && <button className='btn btn-secondary btn-sm' onClick={()=>{handleRemoveComment(comment._id, singleContent._id)}}>Remove Comment</button>
                                                         }
                                                     </li>
                                         })
@@ -468,6 +479,8 @@ const ContentView = (props)=>
                                 </ul> 
                             }
                         </div>
+                        <button className='btn btn-secondary btn-sm mt-3'><Link className='link-danger' to='/'><b>Back To Home-Page</b></Link>
+                        </button>
                     </div>
             }
         </div>
