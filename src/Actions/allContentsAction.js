@@ -5,9 +5,7 @@ export const showContent = () => {
   return async (dispatch) => {
     try {
       const response = await axios.get('http://localhost:3997/api/content')
-      console.log('data', response.data)
       dispatch(content(response.data))
-      console.log('Dispatched FETCH_CONTENT_SUCCESS action');
     } catch (e) {
       alert(e.message)
     }
@@ -27,9 +25,7 @@ export const addLikeAsync = (contentId) => {
       const formData = {
         postId: contentId,
       };
-      console.log(formData, 'formdata')
       const token = localStorage.getItem('token');
-      console.log(token, 'token')
       if (token) {
         const response = await axios.put(
           `http://localhost:3997/api/post/like`,
@@ -42,7 +38,6 @@ export const addLikeAsync = (contentId) => {
         );
 
         const data = response.data;
-        console.log(data, 'data')
         dispatch(addLikeSuccess(data.content));
       }
     }
@@ -58,7 +53,7 @@ export const addLikeSuccess = (content) => ({
 })
 
 export const removeLikeAsync = (contentId) => {
-  console.log(contentId, 'remove id')
+
   return async (dispatch) => {
     try {
       const formData = {
@@ -70,17 +65,10 @@ export const removeLikeAsync = (contentId) => {
         formData, {
         headers: { 'authorization': localStorage.getItem('token') },
       })
-      console.log(response.data, 'contentId')
       const data = response.data
       dispatch(removeLike(data))
-      // Dispatch the action to update the liked state
-      // dispatch(removeLike(response?.data?.content))
     } catch (error) {
-      // dispatch(error.message)
       console.log({ error })
-
-      // Handle errors and dispatch an error action if needed
-      // dispatch(likeError(error));
     }
   }
 }

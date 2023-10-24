@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { showContent } from '../Actions/allContentsAction';
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const TestHomePage = (props)=>
+const HomePage = (props)=>
 {
     const dispatch = useDispatch();
     const history = useHistory();
@@ -52,4 +52,4 @@ const TestHomePage = (props)=>
     );
 };
 
-export default TestHomePage; 
+export default HomePage; 

@@ -56,7 +56,6 @@ export const content = (data) => {
 // };
 export const deleteContent = (id) => {
   return async (dispatch) => {
-    console.log(id, 'content id ')
     try {
       const response = await axios.delete(`http://localhost:3997/api/content/${id}`, 
       { 

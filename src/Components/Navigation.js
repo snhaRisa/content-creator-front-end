@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Swal from 'sweetalert2';
 
 import { removeUser } from '../Actions/usersAction';
-import Home from './Home';
+import HomePage from './HomePage';
 import Register from './Register';
 import Login from './Login';
 import AccountContainer from './AccountContainer';
@@ -51,7 +51,7 @@ const Navigation = (props) =>
                         </>
                 }
             </ul>
-            <Route path='/' component={Home} exact={true} />
+            <Route path='/' component={HomePage} exact={true} />
             <Route path='/register' component={Register} exact={true} />
             <Route path='/login' render={(props) => { return <Login {...props} handleIsLog={handleIsLog} /> }} exact={true} />
             <PrivateRoute path='/account' component={AccountContainer} exact={true} />
