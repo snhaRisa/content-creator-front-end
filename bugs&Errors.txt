@@ -10,12 +10,10 @@ Admin Role Creation;    DONE.
 Payment CHECK logic;    DONE.
 Add Subscribers on Dashboard;        DONE.
 Add Money Earnings on Dashboard;     DONE.
-Post Creation only by Creator; PENDING;
+Post Creation only by Creator; DONE;
 
-Create Post Forms. isSubscribed?
-Content View Page. 
+Create Post Forms. DONE.
+Content View Page. DONE. 
 
-Styling. 
-Subscriber. 
-Posting Contents Only by Creators. 
-
+Styling.    DONE.
+Subscriber. DONE. 
