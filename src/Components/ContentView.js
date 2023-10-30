@@ -296,8 +296,6 @@ const ContentView = (props)=>
         }
     };
 
-    console.log(singleContent);
-    const link = singleContent.fileType; 
     return(
         <div className='container'>
             {
