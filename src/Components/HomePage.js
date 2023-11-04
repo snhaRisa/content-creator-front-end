@@ -26,7 +26,7 @@ const HomePage = (props)=>
 
     return(
         <div className='container text-center'>
-            <h1>Test Page</h1>
+            <h1>Home - Page</h1>
             {
                 content.length > 0 ?
                 content.map((singleContent)=>
