@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 
@@ -8,6 +9,7 @@ import { createContent } from '../Actions/newContentAction';
 const PostContentForm = (props) => 
 {
     const dispatch = useDispatch();
+    const history = useHistory();
     const user = useSelector((state) => 
     {
         return state.users.data;
@@ -19,6 +21,7 @@ const PostContentForm = (props) =>
         creatorId: String(user._id),
         title: '',
         body: '',
+        category: '',
         type: 'image',
         forSubscribers: false,
         fileType: null,
@@ -33,6 +36,10 @@ const PostContentForm = (props) =>
         }
         if (formData.body.trim().length === 0) {
         temp.body = 'Post should have a description!';
+        }
+        if (formData.category.length === 0)
+        {
+            temp.category = 'Please select one category';
         }
         if (!formData.type) {
         temp.type = 'Please select a post type!';
@@ -77,6 +84,7 @@ const PostContentForm = (props) =>
         setFormData({
             title: '',
             body: '',
+            category: '',
             type: 'image',
             forSubscribers: false,
             fileType: null,
@@ -103,8 +111,7 @@ const PostContentForm = (props) =>
             {
                 formDataObject.append(key, formData[key]);
             };
-            console.log(formDataObject);
-            dispatch(createContent(formDataObject, resetForm));
+            dispatch(createContent(formDataObject, resetForm, history));
         };
     };
 
@@ -146,6 +153,22 @@ const PostContentForm = (props) =>
                         <br />
                     </div>
                     <br />
+
+                    <div className='form-group'>
+                        <label htmlFor='category'>Select your Category :  </label>
+                        <select id='category' name='category' className='form-select form-select-sm' value={formData.category} onChange={handleChange}>
+                            <option value=''>Select one category..</option>
+                            {
+                                user && user.categories && user.categories.map((ele, id)=>
+                                {
+                                    return <option key={id} value={ele}>{ele}</option>
+                                })
+                            }
+                        </select>
+                        {errors.category && <span style={{color:'red'}}>{errors.category}</span>}
+                    </div>
+                    <br/>
+                        
 
                     <div className="form-group">
                         <label>Select your Post type !</label>
@@ -230,7 +253,7 @@ const PostContentForm = (props) =>
                         <br />
                     </div>
 
-                    <input type="submit" value={'Post Your Content'} className="btn btn-dark mt-3" />
+                    <input type="submit" value={'Post Your Content'} className="btn btn-primary mt-3" />
                 </form>
         </div>
   );

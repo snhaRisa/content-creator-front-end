@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import validator from 'validator';
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory, Link } from "react-router-dom/cjs/react-router-dom.min";
 import { useDispatch } from "react-redux";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -93,26 +93,26 @@ const Register = (props)=>
 
 
     return (
-        <div className="container md-5 pd-2 text-center">
+        <div className="container mt-5 md-5 text-center">
             <h3 className="mb-4 ">Register With Us !</h3>
             <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <input type="text" name="username" value={username} placeholder="Enter Your User-Name..." onChange={handleChange}/><br/>
-                    {errors.username && <span style={{color:'red'}}>{errors.username}</span>}<br/><br/>
+                <div className="form-group mt-4 col-md-5 mx-auto">
+                    <input className="form-control form-control-sm" type="text" name="username" value={username} placeholder="Enter Your User-Name..." onChange={handleChange}/>
+                    {errors.username && <span className="text-danger mt-1" style={{color:'red'}}>{errors.username}</span>}
                 </div>
-                <div className="form-group">
-                    <input type="text" name="email" value={email} placeholder="Enter Your E-Mail..." onChange={handleChange}/><br/>
-                    <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small><br/>
-                    {errors.email && <span style={{color:'red'}}>{errors.email}</span>}<br/><br/>
+                <div className="form-group mt-4 col-md-5 mx-auto">
+                    <input className='form-control form-control-sm' type="text" name="email" value={email} placeholder="Enter Your E-Mail..." onChange={handleChange}/>
+                    {errors.email && <span className="text-danger mt-1" style={{color:'red'}}>{errors.email}</span>}
                 </div>
-                    <div className="form-group">
-                    <input type="password" name="password" value={password} placeholder="Enter Your Password..." onChange={handleChange}/><br/>
-                    {errors.password && <span style={{color:'red'}}>{errors.password}</span>}<br/><br/>
+                <div className="form-group mt-4 col-md-5 mx-auto">
+                    <input className="form-control form-control-sm" type="password" name="password" value={password} placeholder="Enter Your Password..." onChange={handleChange}/>
+                    {errors.password && <span className="text-danger mt-1" style={{color:'red'}}>{errors.password}</span>}
                 </div>
-                <div className="form-group">
-                    <input className='btn btn-secondary' type="submit" value='Register !'/><br/>
+                <div className="form-group mt-4 col-md-5 mx-auto">
+                    <input className='btn btn-success' type="submit" value='Register !'/><br/>
                 </div>
-            </form>
+            </form><br/>
+            <Link to='/login'>Already Registered ? Login Here !</Link>
         </div>
     );
 };

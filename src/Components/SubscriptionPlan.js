@@ -37,11 +37,12 @@ const SubscriptionPlan = (props)=>
 
                     const subscriberTemp = await axios.get(`http://localhost:3997/api/subscribers`, {headers:{'authorization': token}});
                     const resultSubscriber = subscriberTemp.data;
-                    if(resultSubscriber)
+                    if(resultSubscriber.length > 0)
                     {
                         setSubscribers(resultSubscriber);
-                        setRefresh(false);
                     }
+
+                    setRefresh(false);
                 }
                 catch(err)
                 {

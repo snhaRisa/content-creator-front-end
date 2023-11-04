@@ -14,10 +14,11 @@ const CreatorForm = (props)=>
     const [richText, setRichText] = useState('');
     const [plainText, setPlainText] = useState('');
     const [errors, setErrors] = useState({});
+    const [categories, setCategories] = useState([]);
     const [creator, setCreator] = useState({
         image: '', //store the URL
         bio: '', 
-        categories: '', 
+        categories: [], 
         socialMedia: {
             facebook: '', 
             twitter: '', 
@@ -42,10 +43,19 @@ const CreatorForm = (props)=>
             const socialMediaValue = name.split('.')[1]; 
             setCreator({...creator, socialMedia: {...creator.socialMedia, [socialMediaValue] : value}});
         }
-        else if(name === 'categories')
-        {
-            setCreator({...creator, categories: value}); 
-        }
+    };
+
+    function handleCategoryChange(event)
+    {
+        const categoriesString = event.target.value;
+        const categories = categoriesString.split(',');
+        setCategories(categories);
+      
+        // Update the creator state with the new categories array.
+        setCreator({
+          ...creator,
+          categories: categories,
+        });
     };
 
     function handleRichChange(value)
@@ -64,7 +74,7 @@ const CreatorForm = (props)=>
         {
             temp.bio = 'Your Bio cannot be empty';
         }
-        if(creator.categories.trim().length === 0)
+        if(creator.categories.length === 0)
         {
             temp.categories = 'Please add one category!';
         }
@@ -105,14 +115,14 @@ const CreatorForm = (props)=>
     };
 
     return(
-        <div className='container mt-3'>
+        <div className='container mt-5'>
             <h4>Become A Creator !</h4><br/>
             <form onSubmit={handleSubmit}>
-                <div className="form-group">
+                <div className="form-group col-md-5">
                     <label htmlFor='image'>Upload your Image:</label><br/>
                     <input type="file" className="form-control-file" accept="image/*" id="image" name="image" value={creator.image} onChange={handleChange}/>
                 </div><br/>
-                <div className="form-group">
+                <div className="form-group col-md-5">
                     <label htmlFor="bio">Your Bio:</label>
                     <ReactQuill
                         id="bio"
@@ -130,30 +140,30 @@ const CreatorForm = (props)=>
                     />
                     {errors.bio && <span style={{color:'red'}}>{errors.bio}</span>}
                 </div><br/>
-                <div className="form-group">
+                <div className="form-group col-md-5">
                     <label htmlFor="categories">Enter your content category:</label>
-                    <textarea className="form-control" id='categories' name="categories" value={creator.categories} onChange={handleChange}></textarea>
+                    <textarea className="form-control" id='categories' name="categories" value={categories} placeholder="Enter multiple categories using comma(,)" onChange={handleCategoryChange}></textarea>
                     {errors.categories && <span style={{color:'red'}}>{errors.categories}</span>}
                 </div><br/>
-                <div className="form-group">
+                <div className="form-group col-md-5">
                     <label htmlFor="facebook">Enter your Facebook link:</label>
                     <input type="text" className="form-control" id='facebook' name="socialMedia.facebook" value={creator.socialMedia.facebook} onChange={handleChange}/>
                 </div><br/>
-                <div className="form-group">
+                <div className="form-group col-md-5">
                     <label htmlFor="instagram">Enter your Instagram link:</label>
                     <input type="text" className="form-control" id='instagram' name="socialMedia.instagram" value={creator.socialMedia.instagram} onChange={handleChange}/>
                 </div><br/>
-                <div className="form-group">
+                <div className="form-group col-md-5">
                     <label htmlFor="youtube">Enter your YouTube link:</label>
                     <input type="text" className="form-control" id='youtube' name="socialMedia.youtube" value={creator.socialMedia.youtube} onChange={handleChange}/>
                 </div><br/>
-                <div className="form-group">
+                <div className="form-group col-md-5">
                     <label htmlFor="twitter">Enter your Twitter link:</label>
                     <input type="text" className="form-control" id='twitter' name="socialMedia.twitter" value={creator.socialMedia.twitter} onChange={handleChange}/>
                 </div><br/>
-                <button type="submit" className="btn btn-dark">Submit</button>
+                <button type="submit" className="btn btn-success col-md-2 mx-auto">Submit</button>
             </form><br/>
-            <div className="alert alert-info" role="alert">
+            <div className="alert alert-warning col-md-5" role="alert">
                 <Link to='/account' href="#" className="alert-link">
                     Back to Your Account.
                 </Link>
