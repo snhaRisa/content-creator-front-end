@@ -296,6 +296,8 @@ const ContentView = (props)=>
         }
     };
 
+    console.log(user)
+
     return(
         <div className='container'>
             {
@@ -351,7 +353,10 @@ const ContentView = (props)=>
                                             return <li key={comment._id} className='list-group-item bg-dark text-white'>
                                                         {comment.body}
                                                         {
-                                                            isComment && <button className='btn btn-secondary btn-sm' onClick={()=>{handleRemoveComment(comment._id, singleContent._id)}}>Remove Comment</button>
+                                                            comment.userId === user._id && <button className='btn btn-secondary btn-sm' onClick={()=>{handleRemoveComment(comment._id, singleContent._id)}}>Remove Comment</button>
+                                                        }
+                                                        {
+                                                            comment.userId === user?.userId?._id && <button className='btn btn-secondary btn-sm' onClick={()=>{handleRemoveComment(comment._id, singleContent._id)}}>Remove Comment</button>
                                                         }
                                                     </li>
                                         })

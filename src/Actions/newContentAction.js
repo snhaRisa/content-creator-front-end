@@ -1,7 +1,8 @@
 import axios from "axios";
+import Swal from 'sweetalert2';
 
 
-export const createContent = (formData, resetForm) => {
+export const createContent = (formData, resetForm, history) => {
 
   return async (dispatch) => {
     try {
@@ -16,6 +17,8 @@ export const createContent = (formData, resetForm) => {
       {
         dispatch(content(response.data));
         resetForm();
+        Swal.fire('Successfully Posted the Content.')
+        history.push('/');
       }
     } 
     catch (e) 

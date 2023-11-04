@@ -29,7 +29,6 @@ const SubscriptionPlan = (props)=>
                 try
                 {
                     const planTemp = await axios.get(`http://localhost:3997/api/subscriptionPlans`, {headers: {'authorization':token}});
-                    const subscriberTemp = await axios.get(`http://localhost:3997/api/subscribers`, {headers:{'authorization': token}});
 
                     const resultTemp = planTemp.data; 
                     if(resultTemp)
@@ -37,12 +36,14 @@ const SubscriptionPlan = (props)=>
                         setPlan(resultTemp);
                     }
 
+                    const subscriberTemp = await axios.get(`http://localhost:3997/api/subscribers`, {headers:{'authorization': token}});
                     const resultSubscriber = subscriberTemp.data;
-                    if(resultSubscriber)
+                    if(resultSubscriber.length > 0)
                     {
                         setSubscribers(resultSubscriber);
-                        setRefresh(false);
                     }
+
+                    setRefresh(false);
                 }
                 catch(err)
                 {

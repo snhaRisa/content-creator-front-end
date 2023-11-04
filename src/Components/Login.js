@@ -1,6 +1,6 @@
 import React, {useState} from 'react'; 
 import {useDispatch} from 'react-redux'; 
-import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
+import { useHistory, Link } from 'react-router-dom/cjs/react-router-dom.min';
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { startAddUser } from '../Actions/usersAction';
@@ -73,21 +73,26 @@ const Login = (props)=>
     };
 
     return(
-        <div className='container md-5 text-center'>
+        <div className='container mt-5 md-5 text-center'>
             <h3 className='mb-4'>Login Here!</h3>
             <form onSubmit={handleSubmit}>
-                <div className='form-group'>
-                    <input type='text' name='email' value={email} placeholder='Enter E-Mail...' onChange={handleChange}/><br/>
-                    {errors.email && <span style={{color:'red'}}>{errors.email}</span>}<br/><br/>
+                <div className='form-group mt-4'>
+                    <div className='col-md-5 mx-auto'>
+                        <input className='form-control form-control-sm' type='text' name='email' value={email} placeholder='Enter E-Mail...' onChange={handleChange}/>
+                        {errors.email && <span className='text-danger' style={{color:'red'}}>{errors.email}</span>}
+                    </div>
                 </div>
-                <div className='form-group'>
-                    <input type='password' name='password' value={password} placeholder='Enter your password...' onChange={handleChange}/><br/>
-                    {errors.password && <span style={{color:'red'}}>{errors.password}</span>}<br/><br/>
+                <div className='form-group mt-4'>
+                    <div className='col-md-5 mx-auto'>
+                        <input className='form-control form-control-sm' type='password' name='password' value={password} placeholder='Enter your password...' onChange={handleChange}/>
+                        {errors.password && <span className='text-danger' style={{color:'red'}}>{errors.password}</span>}
+                    </div>
                 </div>
-                <div className='form-group'>
-                    <input type='submit' value='Log In' className='btn btn-secondary'/>
+                <div className='form-group mt-4'>
+                    <input type='submit' value='Log In' className='btn btn-success'/>
                 </div>
-            </form>
+            </form><br/>
+            <Link to='/register'>Haven't Registered ? Register Here !</Link>
         </div>
     );
 };
