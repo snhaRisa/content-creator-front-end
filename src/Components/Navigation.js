@@ -61,6 +61,7 @@ const Navigation = (props) =>
             <PrivateRoute path='/cancel' component={Cancel} exact={true} />
             <PrivateRoute path='/post-content' component={PostContentForm} exact={true} />
             <PrivateRoute path='/content-view/:contentId' component={ContentView} exact={true}/>
+            {/* <PrivateRoute path='/profile-page/:creatorId' component={} exact={true}/> //add creator Profile page here. */}
         </div>
     );
 };

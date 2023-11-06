@@ -156,17 +156,22 @@ const SubscriptionPlan = (props)=>
                         </>
                     }
                     </p>
-                    <h5 className='heading'>List of Your Subscribers !</h5>
-                    <ul className='list-group col-md-6 mx-auto'>
-                        {
-                            list?.subscribers?.map((ele, id) => 
-                            (
-                                <li key={id} className='list-group-item'>
-                                    {ele.userId !== null ? ele.userId.username : "Unknown"}
-                                </li>
-                            ))
-                        }
-                    </ul>
+                    {
+                        Object.keys(list).length>0 &&
+                        <>
+                            <h5 className='heading'>List of Your Subscribers !</h5>
+                            <ul className='list-group col-md-6 mx-auto'>
+                                {
+                                    list?.subscribers?.map((ele, id) => 
+                                    (
+                                        <li key={id} className='list-group-item'>
+                                            {ele.userId !== null ? ele.userId.username : "Unknown"}
+                                        </li>
+                                    ))
+                                }
+                            </ul>
+                        </>
+                    }
                 </>
                 :
                 <>
