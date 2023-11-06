@@ -338,9 +338,10 @@ const ContentView = (props)=>
                             <img className="card-img-top" src={singleContent.fileType} alt={singleContent.title} />
                         ) 
                         : 
+                        singleContent.type === 'video' && 
                         (
                             <video className='card-img-top' controls width="100%" style={{ height: 'auto' }}>
-                                <source src={singleContent.fileType} />
+                                <source src={singleContent.fileType} type='video/mp4'/>
                             </video>
                         )}
                         <p className='card-body mt-3'>
@@ -418,9 +419,10 @@ const ContentView = (props)=>
                             <img className="card-img-top" src={singleContent.fileType} alt={singleContent.title} />
                         ) 
                         : 
+                        singleContent.type === 'video' && 
                         (
-                            <video controls width="100%" style={{ height: 'auto' }}>
-                                <source src={singleContent.fileType} />
+                            <video className='card-img-top' controls width="100%" style={{ height: 'auto' }}>
+                                <source src={singleContent.fileType} type='video/mp4'/>
                             </video>
                         )}
                         <p className='card-body mt-3'>

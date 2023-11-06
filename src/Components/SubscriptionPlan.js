@@ -30,7 +30,6 @@ const SubscriptionPlan = (props)=>
                 try
                 {
                     const planTemp = await axios.get(`http://localhost:3997/api/subscriptionPlans`, {headers: {'authorization':token}});
-
                     const resultTemp = planTemp.data; 
                     if(resultTemp)
                     {
