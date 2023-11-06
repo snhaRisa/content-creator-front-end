@@ -3,6 +3,8 @@ import { useParams, Link } from 'react-router-dom/cjs/react-router-dom.min';
 import { useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import {FaHeart, FaHeartBroken, FaCommentAlt, FaComments, FaEdit } from 'react-icons/fa';
+import {MdDelete} from 'react-icons/md';
 
 const ContentView = (props)=>
 {
@@ -71,21 +73,22 @@ const ContentView = (props)=>
             const tempContent = singleContent.isVisible;
             // console.log(tempContent, 'it is for subscribers');
             setIsExclusive(tempContent);
-            
+
             //checking if the user is subscribed to the creator to watch his exclusive content. 
             const tempSubscribed = subscribers.subscribers.find((ele)=>
             {
                 return ele.userId === user._id;
             })
+
             if(tempSubscribed)
             {
                 setIsSubscribed(true);
-                // console.log('Is subscribed')
+                //console.log('Is subscribed')
             }
             else
             {
                 setIsSubscribed(false);
-                // console.log('not subscribed')
+                //console.log('not subscribed')
             }
             
             //checking if the user is the creator itself. 
@@ -166,9 +169,10 @@ const ContentView = (props)=>
                 {
                     window.location = result.url; 
                 }
-                else
+                else if(result === 'You are already subscribed !');
                 {
                     Swal.fire(result);
+                    setIsSubscribed(true);
                 }
             }
         }
@@ -183,6 +187,7 @@ const ContentView = (props)=>
         try
         {
             const temp = await axios.post(`http://localhost:3997/api/creator/follow`, {userId, creatorId});
+
             if(temp.data.hasOwnProperty('bio'))
             {
                 setCreator(temp.data);
@@ -203,7 +208,8 @@ const ContentView = (props)=>
         try
         {
             const temp = await axios.post(`http://localhost:3997/api/creator/unfollow`, {userId, creatorId});
-            if(temp.data.hasOwnProperty('bio'))
+
+            if(temp.data)
             {
                 setCreator(temp.data);
             }
@@ -296,7 +302,29 @@ const ContentView = (props)=>
         }
     };
 
-    console.log(user)
+    async function handleEditComment(commentId, contentId)
+    {
+        try
+        {
+            const { value: text } = await Swal.fire({
+                input: "textarea",
+                inputLabel: "Enter your new comment !",
+                inputPlaceholder: "Type your comment here...",
+                showCancelButton: true
+            });
+            // console.log(text);
+            // console.log(commentId, contentId);
+            const tempComment = await axios.put('http://localhost:3997/api/comment', {commentId, contentId, body: text}, {headers:{'authorization': token}});
+            if(tempComment.data)
+            {
+                setSingleContent(tempComment.data);
+            }
+        }
+        catch(err)
+        {
+            console.log(err.message);
+        }
+    }
 
     return(
         <div className='container'>
@@ -304,6 +332,7 @@ const ContentView = (props)=>
                 !isExclusive ?
                     <div className='card text-white bg-dark mt-5'>
                         <h3 className='card-title text-center mt-2'>{singleContent.title}</h3>
+                        <h6 className="card-subtitle mb-2 text-muted-white mb-4 mt-2">Posted by {creator?.userId?.username} on {String(singleContent.createdAt).substring(0,10)}</h6>
                         {singleContent.type === 'image' ? 
                         (
                             <img className="card-img-top" src={singleContent.fileType} alt={singleContent.title} />
@@ -322,11 +351,11 @@ const ContentView = (props)=>
                         <div className='btn-group'>
                             {
                                 isLiked ?
-                                    <button className='btn btn-secondary btn-sm' onClick={()=>{handleUnLike(user._id, singleContent._id)}}>Unlike : {singleContent && singleContent.likes && singleContent.likes.length}</button>
+                                    <button className='btn btn-secondary btn-sm' onClick={()=>{handleUnLike(user._id, singleContent._id)}}><FaHeartBroken color='red'/> : {singleContent && singleContent.likes && singleContent.likes.length}</button>
                                     :
-                                    <button className='btn btn-secondary btn-sm' onClick={()=>{handleLike(user._id, singleContent._id)}}>Like : {singleContent && singleContent.likes && singleContent.likes.length}</button>
+                                    <button className='btn btn-secondary btn-sm' onClick={()=>{handleLike(user._id, singleContent._id)}}><FaHeart color='red'/> : {singleContent && singleContent.likes && singleContent.likes.length}</button>
                             }
-                            <button className='btn btn-secondary btn-sm' onClick={()=>{handleAddComment(user._id, singleContent._id)}}>Add Comment</button>
+                            <button className='btn btn-secondary btn-sm' onClick={()=>{handleAddComment(user._id, singleContent._id)}}><FaCommentAlt color='red'/> Add Comment</button>
                             {
                                 isFollower ?
                                     <button className='btn btn-secondary btn-sm' onClick={()=>{handleUnFollow(user._id, creator._id)}}>Un-follow Creator</button>
@@ -341,7 +370,7 @@ const ContentView = (props)=>
                             }
                         </div><br/>
                         <div className='btn-group mt-3'>
-                            <button className='btn btn-secondary btn-sm' disabled={singleContent && singleContent.comments && singleContent.comments.length === 0} onClick={()=>{setShowComments(!showComments)}}>Show Comments</button>
+                            <button className='btn btn-secondary btn-sm' disabled={singleContent && singleContent.comments && singleContent.comments.length === 0} onClick={()=>{setShowComments(!showComments)}}><FaComments color='red'/> Show Comments</button>
                         </div>
                         <div>
                             {
@@ -354,10 +383,21 @@ const ContentView = (props)=>
                                             return <li key={comment._id} className='list-group-item bg-dark text-white'>
                                                         {comment.body}
                                                         {
-                                                            comment.userId === user._id && <button className='btn btn-secondary btn-sm' onClick={()=>{handleRemoveComment(comment._id, singleContent._id)}}>Remove Comment</button>
+                                                            comment.userId === user._id && <> 
+                                                            <button className='btn btn-secondary btn-sm' onClick={()=>{handleRemoveComment(comment._id, singleContent._id)}}><MdDelete color='red'/>
+                                                            </button>
+                                                            <button className='btn btn-secondary btn-sm' onClick={()=>{handleEditComment(comment._id, singleContent._id)}}><FaEdit color='green'/>
+                                                            </button>
+                                                            </>
                                                         }
                                                         {
-                                                            comment.userId === user?.userId?._id && <button className='btn btn-secondary btn-sm' onClick={()=>{handleRemoveComment(comment._id, singleContent._id)}}>Remove Comment</button>
+                                                            comment.userId === user?.userId?._id &&
+                                                            <> 
+                                                            <button className='btn btn-secondary btn-sm' onClick={()=>{handleRemoveComment(comment._id, singleContent._id)}}><MdDelete color='red'/>
+                                                            </button>
+                                                            <button className='btn btn-secondary btn-sm' onClick={()=>{handleEditComment(comment._id, singleContent._id)}}><FaEdit color='red'/>
+                                                            </button>
+                                                            </>
                                                         }
                                                     </li>
                                         })
@@ -365,13 +405,14 @@ const ContentView = (props)=>
                                 </ul> 
                             }
                         </div>
-                        <button className='btn btn-secondary btn-sm mt-3'><Link className='link-danger' to='/'><b>Back To Home-Page</b></Link>
+                        <button className='btn btn-secondary btn-sm mt-3'><Link className='link-info' to='/'><b>Back To Home-Page</b></Link>
                         </button>
                     </div>
                     :
                     isSubscribed || isSame ?
                         <div className='card text-white bg-dark mt-5'>
                         <h3 className='card-title text-center mt-2'>{singleContent.title}</h3>
+                        <h6 className="card-subtitle mb-2 text-muted-white mb-4 mt-2">Posted by {creator?.userId?.username} on {String(singleContent.createdAt).substring(0,10)}</h6>
                         
                         {singleContent.type === 'image' ? 
                         (
@@ -391,11 +432,11 @@ const ContentView = (props)=>
                         <div className='btn-group mt-3'>
                             {
                                 isLiked ?
-                                    <button className='btn btn-secondary btn-sm' onClick={()=>{handleUnLike(user._id, singleContent._id)}}>Un-Like : {singleContent && singleContent.likes && singleContent.likes.length}</button>
+                                    <button className='btn btn-secondary btn-sm' onClick={()=>{handleUnLike(user._id, singleContent._id)}}><FaHeartBroken color='red'/> : {singleContent && singleContent.likes && singleContent.likes.length}</button>
                                     :
-                                    <button className='btn btn-secondary btn-sm' onClick={()=>{handleLike(user._id, singleContent._id)}}>Like : {singleContent && singleContent.likes && singleContent.likes.length}</button>
+                                    <button className='btn btn-secondary btn-sm' onClick={()=>{handleLike(user._id, singleContent._id)}}><FaHeart color='red'/> : {singleContent && singleContent.likes && singleContent.likes.length}</button>
                             }
-                            <button className='btn btn-secondary btn-sm' onClick={()=>{handleAddComment(user._id, singleContent._id)}}>Add Comment</button>
+                            <button className='btn btn-secondary btn-sm' onClick={()=>{handleAddComment(user._id, singleContent._id)}}><FaCommentAlt color='red'/> Add Comment</button>
                             {
                                 isFollower ?
                                     <button className='btn btn-secondary btn-sm' onClick={()=>{handleUnFollow(user._id, creator._id)}}>Un-follow Creator</button>
@@ -410,7 +451,7 @@ const ContentView = (props)=>
                             }
                         </div>
                         <div className='btn-group mt-3'>
-                            <button className='btn btn-secondary btn-sm' disabled={singleContent && singleContent.comments && singleContent.comments.length === 0} onClick={()=>{setShowComments(!showComments)}}>Show Comments</button>
+                            <button className='btn btn-secondary btn-sm' disabled={singleContent && singleContent.comments && singleContent.comments.length === 0} onClick={()=>{setShowComments(!showComments)}}><FaComments color='red'/> Show Comments</button>
                         </div>
                         <div>
                             {
@@ -423,7 +464,21 @@ const ContentView = (props)=>
                                             return <li key={comment._id} className='list-group-item bg-dark text-white'>
                                                         {comment.body}
                                                         {
-                                                            isComment && <button className='btn btn-secondary btn-sm' onClick={()=>{handleRemoveComment(comment._id, singleContent._id)}}>Remove Comment</button>
+                                                            comment.userId === user._id && <> 
+                                                            <button className='btn btn-secondary btn-sm' onClick={()=>{handleRemoveComment(comment._id, singleContent._id)}}><MdDelete color='red'/>
+                                                            </button>
+                                                            <button className='btn btn-secondary btn-sm' onClick={()=>{handleEditComment(comment._id, singleContent._id)}}><FaEdit color='green'/>
+                                                            </button>
+                                                            </>
+                                                        }
+                                                        {
+                                                            comment.userId === user?.userId?._id &&
+                                                            <> 
+                                                            <button className='btn btn-secondary btn-sm' onClick={()=>{handleRemoveComment(comment._id, singleContent._id)}}><MdDelete color='red'/>
+                                                            </button>
+                                                            <button className='btn btn-secondary btn-sm' onClick={()=>{handleEditComment(comment._id, singleContent._id)}}><FaEdit color='red'/>
+                                                            </button>
+                                                            </>
                                                         }
                                                     </li>
                                         })
@@ -437,6 +492,7 @@ const ContentView = (props)=>
                     :
                     <div className='card text-white bg-dark mt-5'>
                         <h3 className='card-title text-center'>{singleContent.title}</h3>
+                        <h6 className="card-subtitle mb-2 text-muted-white mb-4 mt-2">Posted by {creator?.userId?.username} on {String(singleContent.createdAt).substring(0,10)}</h6>
                         <p className='card-body'>
                             {singleContent.body}
                             <br/>
@@ -446,11 +502,11 @@ const ContentView = (props)=>
                         <div className='btn-group mt-3'>
                             {
                                 isLiked ?
-                                    <button className='btn btn-secondary btn-sm' onClick={()=>{handleUnLike(user._id, singleContent._id)}}>Un-Like : {singleContent && singleContent.likes && singleContent.likes.length}</button>
+                                    <button className='btn btn-secondary btn-sm' onClick={()=>{handleUnLike(user._id, singleContent._id)}}><FaHeartBroken color='red'/> : {singleContent && singleContent.likes && singleContent.likes.length}</button>
                                     :
-                                    <button className='btn btn-secondary btn-sm' onClick={()=>{handleLike(user._id, singleContent._id)}}>Like : {singleContent && singleContent.likes && singleContent.likes.length}</button>
+                                    <button className='btn btn-secondary btn-sm' onClick={()=>{handleLike(user._id, singleContent._id)}}><FaHeart color='red'/> : {singleContent && singleContent.likes && singleContent.likes.length}</button>
                             }
-                            <button className='btn btn-secondary btn-sm' onClick={()=>{handleAddComment(user._id, singleContent._id)}}>Add Comment</button>
+                            <button className='btn btn-secondary btn-sm' onClick={()=>{handleAddComment(user._id, singleContent._id)}}><FaCommentAlt color='red'/> Add Comment</button>
                             {
                                 isFollower ?
                                     <button className='btn btn-secondary btn-sm' onClick={()=>{handleUnFollow(user._id, creator._id)}}>Un-follow Creator</button>
@@ -465,7 +521,7 @@ const ContentView = (props)=>
                             }
                         </div><br/>
                         <div className='btn-group mt-3'>
-                            <button className='btn btn-secondary btn-sm' disabled={singleContent && singleContent.comments && singleContent.comments.length === 0} onClick={()=>{setShowComments(!showComments)}}>Show Comments</button>
+                            <button className='btn btn-secondary btn-sm' disabled={singleContent && singleContent.comments && singleContent.comments.length === 0} onClick={()=>{setShowComments(!showComments)}}><FaComments color='red'/> Show Comments</button>
                         </div>
                         <div>
                             {
@@ -478,7 +534,21 @@ const ContentView = (props)=>
                                             return <li key={comment._id} className='list-group-item bg-dark text-white'>
                                                         {comment.body}
                                                         {
-                                                            isComment && <button className='btn btn-secondary btn-sm' onClick={()=>{handleRemoveComment(comment._id, singleContent._id)}}>Remove Comment</button>
+                                                            comment.userId === user._id && <> 
+                                                            <button className='btn btn-secondary btn-sm' onClick={()=>{handleRemoveComment(comment._id, singleContent._id)}}><MdDelete color='red'/>
+                                                            </button>
+                                                            <button className='btn btn-secondary btn-sm' onClick={()=>{handleEditComment(comment._id, singleContent._id)}}><FaEdit color='green'/>
+                                                            </button>
+                                                            </>
+                                                        }
+                                                        {
+                                                            comment.userId === user?.userId?._id &&
+                                                            <> 
+                                                            <button className='btn btn-secondary btn-sm' onClick={()=>{handleRemoveComment(comment._id, singleContent._id)}}><MdDelete color='red'/>
+                                                            </button>
+                                                            <button className='btn btn-secondary btn-sm' onClick={()=>{handleEditComment(comment._id, singleContent._id)}}><FaEdit color='red'/>
+                                                            </button>
+                                                            </>
                                                         }
                                                     </li>
                                         })

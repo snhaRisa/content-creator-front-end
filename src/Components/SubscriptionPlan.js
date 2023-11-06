@@ -12,6 +12,7 @@ const SubscriptionPlan = (props)=>
 { 
     const [plan, setPlan] = useState({});
     const [subscribers, setSubscribers] = useState({});
+    const [list, setList] = useState([]);
     const [refresh, setRefresh] = useState(true);
     const token = localStorage.getItem('token');
 
@@ -37,9 +38,18 @@ const SubscriptionPlan = (props)=>
 
                     const subscriberTemp = await axios.get(`http://localhost:3997/api/subscribers`, {headers:{'authorization': token}});
                     const resultSubscriber = subscriberTemp.data;
-                    if(resultSubscriber.length > 0)
+
+                    if(resultSubscriber)
                     {
                         setSubscribers(resultSubscriber);
+                    }
+
+                    const nameTemp = await axios.get('http://localhost:3997/subscribers-name', {headers:{'authorization': token}});
+                    const nameData = nameTemp.data; 
+
+                    if(nameData)
+                    {
+                        setList(nameData);
                     }
 
                     setRefresh(false);
@@ -118,7 +128,6 @@ const SubscriptionPlan = (props)=>
         }
     }
 
-
     return(
         <div className='container text-center mt-5'>
             <h2>Manage Your Subscriptions</h2>
@@ -127,7 +136,8 @@ const SubscriptionPlan = (props)=>
             </p>
             {
                 plan.amount ? 
-                <p>
+                <>
+                    <p>
                     You have created one plan. Here are the details of your subscription plan.<br/><br/>
                     <em>Plan Name</em> : <b>{plan.name}</b><br/>
                     <em>Plan Amount</em> : <b>{plan.amount}</b><br/><br/>
@@ -145,7 +155,19 @@ const SubscriptionPlan = (props)=>
                             But Chin Up ! Create Content and People will come follow you soon.
                         </>
                     }
-                </p>
+                    </p>
+                    <h5 className='heading'>List of Your Subscribers !</h5>
+                    <ul className='list-group col-md-6 mx-auto'>
+                        {
+                            list?.subscribers?.map((ele, id) => 
+                            (
+                                <li key={id} className='list-group-item'>
+                                    {ele.userId !== null ? ele.userId.username : "Unknown"}
+                                </li>
+                            ))
+                        }
+                    </ul>
+                </>
                 :
                 <>
                     <p>
@@ -155,7 +177,7 @@ const SubscriptionPlan = (props)=>
                     <SubscriptionForm/>
                 </>
             }
-            <Link to='/account' className='btn btn-danger'>Back to Dashboard</Link>
+            <Link to='/account' className='btn btn-danger mt-5'>Back to Dashboard</Link>
         </div>
     );
 };
