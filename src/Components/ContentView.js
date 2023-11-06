@@ -67,7 +67,7 @@ const ContentView = (props)=>
 
     useEffect(()=>
     {
-        if(Object.keys(subscribers).length > 0 && Object.keys(user).length > 0 && Object.keys(singleContent).length>0)
+        if(Object.keys(user).length > 0 && Object.keys(singleContent).length>0)
         {
             //Checking if the content is exclusive in nature. 
             const tempContent = singleContent.isVisible;
@@ -75,7 +75,7 @@ const ContentView = (props)=>
             setIsExclusive(tempContent);
 
             //checking if the user is subscribed to the creator to watch his exclusive content. 
-            const tempSubscribed = subscribers.subscribers.find((ele)=>
+            const tempSubscribed = subscribers?.subscribers?.find((ele)=>
             {
                 return ele.userId === user._id;
             })
@@ -332,7 +332,7 @@ const ContentView = (props)=>
                 !isExclusive ?
                     <div className='card text-white bg-dark mt-5'>
                         <h3 className='card-title text-center mt-2'>{singleContent.title}</h3>
-                        <h6 className="card-subtitle mb-2 text-muted-white mb-4 mt-2">Posted by {creator?.userId?.username} on {String(singleContent.createdAt).substring(0,10)}</h6>
+                        <h6 className="card-subtitle text-center text-muted-white mb-4 mt-2">Posted by {creator?.userId?.username} on {String(singleContent.createdAt).substring(0,10)}</h6>
                         {singleContent.type === 'image' ? 
                         (
                             <img className="card-img-top" src={singleContent.fileType} alt={singleContent.title} />
@@ -412,7 +412,7 @@ const ContentView = (props)=>
                     isSubscribed || isSame ?
                         <div className='card text-white bg-dark mt-5'>
                         <h3 className='card-title text-center mt-2'>{singleContent.title}</h3>
-                        <h6 className="card-subtitle mb-2 text-muted-white mb-4 mt-2">Posted by {creator?.userId?.username} on {String(singleContent.createdAt).substring(0,10)}</h6>
+                        <h6 className="card-subtitle mb-2 text-center text-muted-white mb-4 mt-2">Posted by {creator?.userId?.username} on {String(singleContent.createdAt).substring(0,10)}</h6>
                         
                         {singleContent.type === 'image' ? 
                         (
@@ -486,13 +486,13 @@ const ContentView = (props)=>
                                 </ul> 
                             }
                         </div>
-                        <button className='btn btn-secondary btn-sm mt-3'><Link className='link-danger' to='/'><b>Back To Home-Page</b></Link>
+                        <button className='btn btn-secondary btn-sm mt-3'><Link className='link-info' to='/'><b>Back To Home-Page</b></Link>
                         </button>
                     </div>
                     :
                     <div className='card text-white bg-dark mt-5'>
                         <h3 className='card-title text-center'>{singleContent.title}</h3>
-                        <h6 className="card-subtitle mb-2 text-muted-white mb-4 mt-2">Posted by {creator?.userId?.username} on {String(singleContent.createdAt).substring(0,10)}</h6>
+                        <h6 className="card-subtitle mb-2 text-center text-muted-white mb-4 mt-2">Posted by {creator?.userId?.username} on {String(singleContent.createdAt).substring(0,10)}</h6>
                         <p className='card-body'>
                             {singleContent.body}
                             <br/>
@@ -556,7 +556,7 @@ const ContentView = (props)=>
                                 </ul> 
                             }
                         </div>
-                        <button className='btn btn-secondary btn-sm mt-3'><Link className='link-danger' to='/'><b>Back To Home-Page</b></Link>
+                        <button className='btn btn-secondary btn-sm mt-3'><Link className='link-info' to='/'><b>Back To Home-Page</b></Link>
                         </button>
                     </div>
             }
