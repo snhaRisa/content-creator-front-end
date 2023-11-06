@@ -30,7 +30,7 @@ const Navigation = (props) =>
 
     return (
         <div className='container md-5 pd-2'>
-            <ul className='nav' style={{ backgroundColor: 'white' }}>
+            <ul className='nav' style={{ color:'black', backgroundColor: 'Bisque', fontSize: '1.5em', fontWeight: 'bold', fontFamily: 'Arial, sans-serif'}}>
                 <li className='nav-item'><Link to='/' className='nav-link' style={{ color: 'brown' }}>Home</Link></li>
                 {
                     isLog ?

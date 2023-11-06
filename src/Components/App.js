@@ -61,7 +61,7 @@ const App = (props)=>
     return(
         <div className="container">
             <div className="text-center">
-                <h1 className="display-5 mt-5 mb-5 pd-3" style={{color: 'brown'}}>Content Creation</h1>
+                <h1 className="display-3 mt-5 mb-5 pd-3" style={{color: 'brown', fontSize: '6.5em', fontWeight: 'bold', fontFamily: 'Arial, sans-serif'}}>Content Creation</h1>
             </div>
             <Navigation isLog={isLog} handleIsLog={handleIsLog} />
         </div>
