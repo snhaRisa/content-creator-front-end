@@ -33,7 +33,7 @@ const HomePage = (props)=>
 
     return(
         <div className='container text-center my-5'>
-            <h1>Home - Page</h1>
+            <h1 style={{color: 'brown', fontSize: '3.5em', fontWeight: 'bold', fontFamily: 'Comic Sans MS'}}>Home - Page</h1>
             <SearchHomePage/>
             <div className='row mt-5'>
                 {content.length > 0 ?
