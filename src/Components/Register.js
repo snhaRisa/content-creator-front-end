@@ -94,7 +94,7 @@ const Register = (props)=>
 
     return (
         <div className="container mt-5 md-5 text-center">
-            <h3 className="mb-4 ">Register With Us !</h3>
+            <h3 className="mb-4" style={{ fontSize: '3.5em', fontWeight: 'bold', fontFamily: 'Comic Sans MS'}}>Register With Us !</h3>
             <form onSubmit={handleSubmit}>
                 <div className="form-group mt-4 col-md-5 mx-auto">
                     <input className="form-control form-control-sm" type="text" name="username" value={username} placeholder="Enter Your User-Name..." onChange={handleChange}/>

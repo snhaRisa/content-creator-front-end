@@ -10,11 +10,6 @@ import configureStore from './Store/configureStore';
 
 //Store configurations
 const store = configureStore(); 
-console.log(store, store.getState());
-store.subscribe(()=>
-{
-    console.log('After Update', store.getState());
-});
 
 //initializing root & rendering it. 
 const root = ReactDOM.createRoot(document.getElementById('root'));

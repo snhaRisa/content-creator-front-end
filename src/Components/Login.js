@@ -74,7 +74,7 @@ const Login = (props)=>
 
     return(
         <div className='container mt-5 md-5 text-center'>
-            <h3 className='mb-4'>Login Here!</h3>
+            <h3 className='mb-4 mt-5' style={{ fontSize: '3.5em', fontWeight: 'bold', fontFamily: 'Comic Sans MS'}}>Login Here!</h3>
             <form onSubmit={handleSubmit}>
                 <div className='form-group mt-4'>
                     <div className='col-md-5 mx-auto'>
