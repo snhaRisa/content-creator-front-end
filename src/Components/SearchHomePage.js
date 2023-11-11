@@ -27,7 +27,7 @@ const SearchHomePage = (props)=>
             const temp = content.filter((ele)=>
             {
                 const creatorName = ele.creatorId.userId.username;
-                return creatorName.toLowerCase().includes(value);
+                return creatorName.toLowerCase().includes(value) || ele.category.trim().toLowerCase().includes(value);
             });
             setSearchResults(temp);
         }
@@ -44,7 +44,7 @@ const SearchHomePage = (props)=>
 
     return(
         <div className='container mt-3 md-3'>
-            <input className="form-control mr-sm-2 col-md-3" name='search' value={search} type="search" placeholder="Search your favorite creator..." onChange={handleChange}/>
+            <input className="form-control mr-sm-2 row col-md-5" name='search' value={search} type="search" placeholder="Search your favorite creator or category..." onChange={handleChange}/>
             {
                 searchResults.length > 0 &&
                 <div className='container mt-3 md-3'>
@@ -53,6 +53,7 @@ const SearchHomePage = (props)=>
                             <tr>
                                 <th>Name</th>
                                 <th>Title</th>
+                                <th>Category</th>
                                 <th>Posted On</th>
                                 <th>Action</th>
                             </tr>
@@ -64,6 +65,7 @@ const SearchHomePage = (props)=>
                                     return <tr key={id}>
                                         <td>{result.creatorId.userId.username}</td>
                                         <td>{result.title}</td>
+                                        <td>{result.category}</td>
                                         <td>{String(result.createdAt).substring(0,10)}</td>
                                         <td><button className='btn btn-dark btn-sm' onClick={()=>{handleContentView(result._id)}}>View</button></td>
                                     </tr>

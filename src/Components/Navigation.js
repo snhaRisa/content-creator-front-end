@@ -30,14 +30,14 @@ const Navigation = (props) =>
 
     return (
         <div className='container md-5 pd-2'>
-            <ul className='nav' style={{ color:'black', backgroundColor: 'Bisque', fontSize: '1.5em', fontWeight: 'bold', fontFamily: 'Arial, sans-serif'}}>
-                <li className='nav-item'><Link to='/' className='nav-link' style={{ color: 'brown' }}>Home</Link></li>
+            <ul className='nav' style={{ color:'black', backgroundColor: 'WhiteSmoke', fontSize: '1.5em', fontWeight: 'bold', fontFamily: 'Arial, sans-serif'}}>
+                <li className='nav-item'><Link to='/' className='nav-link' style={{ color: 'Teal' }}>Home</Link></li>
                 {
                     isLog ?
                         <>
-                            {user.bio && <li><Link to='/post-content' className='nav-link' style={{ color: 'brown' }}>Post Content</Link></li>}
-                            <li><Link to='/account' className='nav-link' style={{ color: 'brown' }}>Account</Link></li>
-                            <li><Link to='/' style={{ color: 'brown' }} onClick={() => {
+                            {user.bio && <li><Link to='/post-content' className='nav-link' style={{ color: 'Teal' }}>Post Content</Link></li>}
+                            <li><Link to='/account' className='nav-link' style={{ color: 'Teal' }}>Account</Link></li>
+                            <li><Link to='/' style={{ color: 'Teal' }} onClick={() => {
                                 localStorage.removeItem('token');
                                 handleIsLog();
                                 dispatch(removeUser());
@@ -46,8 +46,8 @@ const Navigation = (props) =>
                         </>
                         :
                         <>
-                            <li><Link to='/register' className='nav-link' style={{ color: 'brown' }}>Register</Link></li>
-                            <li><Link to='/login' className='nav-link' style={{ color: 'brown' }}>Log-In</Link></li>
+                            <li><Link to='/register' className='nav-link' style={{ color: 'Teal' }}>Register</Link></li>
+                            <li><Link to='/login' className='nav-link' style={{ color: 'Teal' }}>Log-In</Link></li>
                         </>
                 }
             </ul>

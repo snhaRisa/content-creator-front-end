@@ -84,12 +84,12 @@ export const startAddUser = (inputObj, resetForm, history)=>
             }
             else
             {
-                Swal.fire(result.message); 
+                Swal.fire(result.error); 
             }
         }
         catch(err)
         {
-            Swal.fire(err.message);
+            Swal.fire(err.error);
         }
     })
 };
