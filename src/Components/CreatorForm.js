@@ -118,10 +118,10 @@ const CreatorForm = (props)=>
         <div className='container mt-5'>
             <h4>Become A Creator !</h4><br/>
             <form onSubmit={handleSubmit}>
-                <div className="form-group col-md-5">
+                {/* <div className="form-group col-md-5">
                     <label htmlFor='image'>Upload your Image:</label><br/>
                     <input type="file" className="form-control-file" accept="image/*" id="image" name="image" value={creator.image} onChange={handleChange}/>
-                </div><br/>
+                </div><br/> */}
                 <div className="form-group col-md-5">
                     <label htmlFor="bio">Your Bio:</label>
                     <ReactQuill
