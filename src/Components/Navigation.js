@@ -16,28 +16,39 @@ import Success from './Success';
 import Cancel from './Cancel';
 import ContentView from './ContentView';
 import PrivateRoute from './PrivateRoute';
+import Profile from './Profile';
 
-const Navigation = (props) => 
-{
+const Navigation = (props) => {
     const { isLog, handleIsLog } = props
 
     const dispatch = useDispatch();
-    
-    const user = useSelector((state)=>
-    {
+
+    const user = useSelector((state) => {
         return state.users.data;
     });
 
     return (
         <div className='container md-5 pd-2'>
-            <ul className='nav' style={{ color:'black', backgroundColor: 'WhiteSmoke', fontSize: '1.5em', fontWeight: 'bold', fontFamily: 'Arial, sans-serif'}}>
-                <li className='nav-item'><Link to='/' className='nav-link' style={{ color: 'Teal' }}>Home</Link></li>
+            <ul className='nav' style={{ backgroundColor: 'white' }}>
+                <li className='nav-item'><Link to='/' className='nav-link' style={{ color: 'brown' }}>Home <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-door-fill" viewBox="0 0 16 16">
+                    <path d="M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z" />
+                </svg></Link></li>
                 {
                     isLog ?
                         <>
-                            {user.bio && <li><Link to='/post-content' className='nav-link' style={{ color: 'Teal' }}>Post Content</Link></li>}
-                            <li><Link to='/account' className='nav-link' style={{ color: 'Teal' }}>Account</Link></li>
-                            <li><Link to='/' style={{ color: 'Teal' }} onClick={() => {
+                            {user.bio && <li><Link to='/post-content' className='nav-link' style={{ color: 'brown' }}>Post Content</Link></li>}
+
+                            {user.bio && <li><Link to='/profile' className='nav-link' style={{ color: 'brown' }} >Profile <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                            </svg></Link></li>}
+
+                            <li><Link to='/account' className='nav-link' style={{ color: 'brown' }}> Account <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                            </svg> </Link></li>
+
+                            <li><Link to='/' style={{ color: 'brown' }} onClick={() => {
                                 localStorage.removeItem('token');
                                 handleIsLog();
                                 dispatch(removeUser());
@@ -46,8 +57,8 @@ const Navigation = (props) =>
                         </>
                         :
                         <>
-                            <li><Link to='/register' className='nav-link' style={{ color: 'Teal' }}>Register</Link></li>
-                            <li><Link to='/login' className='nav-link' style={{ color: 'Teal' }}>Log-In</Link></li>
+                            <li><Link to='/register' className='nav-link' style={{ color: 'brown' }}>Register</Link></li>
+                            <li><Link to='/login' className='nav-link' style={{ color: 'brown' }}>Log-In</Link></li>
                         </>
                 }
             </ul>
@@ -60,8 +71,8 @@ const Navigation = (props) =>
             <PrivateRoute path='/success' component={Success} exact={true} />
             <PrivateRoute path='/cancel' component={Cancel} exact={true} />
             <PrivateRoute path='/post-content' component={PostContentForm} exact={true} />
-            <PrivateRoute path='/content-view/:contentId' component={ContentView} exact={true}/>
-            {/* <PrivateRoute path='/profile-page/:creatorId' component={} exact={true}/> //add creator Profile page here. */}
+            <PrivateRoute path='/content-view/:contentId' component={ContentView} exact={true} />
+            <PrivateRoute path='/profile' component={Profile} exact={true} />
         </div>
     );
 };
