@@ -64,26 +64,31 @@ const Profile = (props) => {
 
 
     return (
-        <section class="section about-section gray-bg" id="about">
-            <div class="container" style={{ backgroundColor: '#f2f2f2' }}>
+        <section className="section about-section gray-bg" id="about">
+            <div className="container" style={{ backgroundColor: '#f2f2f2' }}>
                 {/* <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="img-fluid avatar-xxl rounded-circle" alt="" /> */}
 
                 <div className='body' >
                     <div className='media-body ml-5'>
                         {
                             user.data && user.data.userId ?
-                                <h3 class=" font-weight-bold mt-3" style={{ backgroundColor: 'white' }}> {user.data.userId.username}</h3>
+                                <h3 className=" font-weight-bold mt-3" style={{ backgroundColor: 'white' }}> {user.data.userId.username}</h3>
                                 :
                                 <h4>Loading ....</h4>
                         }
-                        <span class=" font-size-13 mb-0"><h5><p>{user.data.bio}</p></h5></span>
+                        <span className=" font-size-13 mb-0"><h5><p>{user.data.bio}</p></h5></span>
                     </div>
                 </div>
 
                 <div className='d-flex justify-center-top ' >
-                    {<h5>Subscribers :
+                    {/* {<h5>Subscribers :
                         <Link onClick={() => setSelectedSubscribers(true)}>{subscribers.length}
-                        </Link></h5>}
+                        </Link></h5>} */}
+                        {
+                            <h5>Subscribers :
+                            <span onClick={() => setSelectedSubscribers(true)}>{subscribers.length}
+                            </span></h5>
+                        }
                 </div>
 
                 {
@@ -153,12 +158,13 @@ const Profile = (props) => {
                 <div className='card-group' >
                     <Row>
                         {data.map((ele, i) => {
+                            console.log(ele,'ele')
                             return (
                                 <Col key={i} xs='auto'>
                                     <div onClick={() => handleImageClick(ele)}>
                                         {console.log(ele,'ele')}
                                         {ele.type === 'image' ? (
-                                            <Image src={ele.fileType} class="card-img-top" thumbnail style={{ width: "275px", height: "275px" }} />
+                                            <Image src={ele.fileType} className="card-img-top" thumbnail style={{ width: "275px", height: "275px" }} />
                                         ) : (
                                             <video controls width={200}>
                                                 <source src={ele.fileType} />
