@@ -27,9 +27,9 @@ const HomePage = (props)=>
     };
 
     function handleProfileView(creatorId)
-    {
+    {   
         //history.push(`/profile-page/${creatorId}`);
-    };
+    }
 
     return(
         <div className='container text-center my-5'>
@@ -51,7 +51,7 @@ const HomePage = (props)=>
                                     <span className='badge rounded-pill bg-secondary'>Category: {singleContent.category}</span>
                                 </div>
                                 <div className="card-footer text-muted">
-                                    Posted by <Link to={`/profile-page/${singleContent.creatorId._id}`}><span className="badge rounded-pill bg-dark">{singleContent?.creatorId?.userId?.username}</span></Link> on {String(singleContent.createdAt).substring(0, 10)}
+                                    Posted by <Link to={`/creator-profile/${singleContent.creatorId._id}`}><span className="badge rounded-pill bg-dark">{singleContent?.creatorId?.userId?.username}</span></Link> on {String(singleContent.createdAt).substring(0, 10)}
                                 </div>
                                 <button onClick={() => { handleContentView(singleContent._id) }} className='btn btn-outline-danger mt-3 mx-3 mb-3'>View Content</button>
                         </div>

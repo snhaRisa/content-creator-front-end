@@ -17,6 +17,7 @@ import Cancel from './Cancel';
 import ContentView from './ContentView';
 import PrivateRoute from './PrivateRoute';
 import Profile from './Profile';
+import CreatorProfile from './Creator-Profile';
 
 const Navigation = (props) => {
     const { isLog, handleIsLog } = props
@@ -67,6 +68,7 @@ const Navigation = (props) => {
             <PrivateRoute path='/post-content' component={PostContentForm} exact={true} />
             <PrivateRoute path='/content-view/:contentId' component={ContentView} exact={true} />
             <PrivateRoute path='/profile' component={Profile} exact={true} />
+            <Route path='/creator-profile/:id' component={CreatorProfile} />
         </div>
     );
 };
