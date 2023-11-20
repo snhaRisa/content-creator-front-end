@@ -75,7 +75,7 @@ const Navigation = (props) => {
             <PrivateRoute path='/post-content' component={PostContentForm} exact={true} />
             <PrivateRoute path='/content-view/:contentId' component={ContentView} exact={true} />
             <PrivateRoute path='/profile' component={Profile} exact={true} />
-            <Route path='/creator-profile/:id' component={CreatorProfile} />
+            <PrivateRoute path='/creator-profile/:id' component={CreatorProfile} exact={true} />
         </div>
     );
 };
