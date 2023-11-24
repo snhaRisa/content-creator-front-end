@@ -182,7 +182,7 @@ const SubscriptionPlan = (props)=>
                     <SubscriptionForm/>
                 </>
             }
-            <Link to='/account' className='btn btn-danger mt-5'>Back to Dashboard</Link>
+            <Link to='/profile' className='btn btn-danger mt-5'>Back to Dashboard</Link>
         </div>
     );
 };

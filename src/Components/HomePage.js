@@ -26,14 +26,9 @@ const HomePage = (props)=>
         history.push(`/content-view/${contentId}`);
     };
 
-    function handleProfileView(creatorId)
-    {   
-        //history.push(`/profile-page/${creatorId}`);
-    }
-
     return(
         <div className='container text-center my-5'>
-            <h1 style={{ fontSize: '3.5em', fontWeight: 'bold', fontFamily: 'Comic Sans MS'}}>Home - Page</h1>
+            <h1 className='display-1' style={{ fontSize: '7.5em', fontWeight: 'bold', fontFamily: 'Comic Sans MS'}}>Home - Page</h1>
             <SearchHomePage/>
             <div className='row mt-5'>
                 {content.length > 0 ?

@@ -14,24 +14,20 @@ const CreatorProfile = () => {
     const content = useSelector((state) => state.content.content);
     const [subscribers, setSubscribers] = useState([])
     const [user, setUser] = useState([])
-    console.log(user, 'user')
     const [creator, setCreator] = useState({})
     const [info, setInfo] = useState({})
     const [selectedImage, setSelectedImage] = useState(null);
     const [selectedSubscribers, setSelectedSubscribers] = useState(null)
 
     const params = useParams()
-    console.log(params, 'params')
 
     const result = jwtDecode(localStorage.getItem('token'));
 
     const data = content.filter((ele) => {
         return params.id === ele.creatorId._id;
     });
-    console.log(data, 'creator data')
-    console.log(info, 'info')
+
     useEffect(() => {
-        console.log(params, 'inuseEffect')
         axios.post('http://localhost:3997/api/fetchprofile', { _id: params.id }, {
             headers: {
                 'Authorization': localStorage.getItem('token')
@@ -83,46 +79,51 @@ const CreatorProfile = () => {
     }
 
     return (
-        <section className="section about-section gray-bg" id="about">
-            <div className="container" style={{ backgroundColor: '#f2f2f2' }}>
+        <section className="section about-section" id="about">
+            <div className="container">
                 {/* <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="img-fluid avatar-xxl rounded-circle" alt="" /> */}
 
-                <div className='body' >
-                    <div className='media-body ml-5'>
+                <h2 className='display-1 text-center mt-5 mb-5'>Profile Page of <span className='text-muted'><u>{user?.tempData?.username}</u></span></h2>
+
+                <div className='card col-md-5 mx-auto'>
+                    <div className='card-header'>
                         {
                             user ?
-                                <h3 className=" font-weight-bold ml-5"> {user?.tempData?.username}</h3>
+                                <h3 className="h3 text-center"> {user?.tempData?.username}</h3>
                                 :
                                 <h4>Loading ....</h4>
                         }
-                        <span className=" font-size-13 mb-0"><h4><p>{user?.tempData?.role}</p></h4></span>
                     </div>
                 </div>
-                {info.followers ? (
-                    <h5 className="text-right">Followers: {info.followers.length}</h5>
-                ) : (
-                    <h5>Loading...</h5>
-                )}
-
-                <div className='d-flex justify-center-top ' >
-
-                    {
-                        <h5>Subscribers :
-                            <span onClick={() => setSubscribers(true)}>{subscribers.length}
-                            </span></h5>
-                    }
+                    
+                <div className="row mt-2 mb-3">
+                    <div className="card col-md-5 mx-auto">
+                        {
+                            info.followers ? 
+                            (
+                                <h3 className="h3 text-center">Followers: {info.followers.length}</h3>
+                            ) 
+                            : 
+                            (
+                                <h3 className="h3 text-center">Loading...</h3>
+                            )}
+                    </div>
+                    <div className='card col-md-5 mx-auto' >
+                        {
+                            <h3 className="h3 text-center">Subscribers :
+                                <span onClick={() => setSubscribers(true)}>{subscribers.length}
+                                </span>
+                            </h3>
+                        }
+                    </div>
                 </div>
 
-                <h5> Categories: {info.categories}</h5>
-                {/* {
-                    user.data && user.data.socialMedia ?
-                        <h5> Links:</h5>
-                        :
-                        <h4>Loading...</h4>
-                } */}
+                <div className='card col-md-5 mx-auto'>
+                    <h3 className="text-center h3"> Categories : {info.categories}</h3>
+                </div>
 
-                <ul className='list-group mb-4'>
-                    <h5>Social Media:</h5>
+                <ul className='list-group mt-2 mb-3'>
+                    <h3 className="h3 text-muted">Social Media:</h3>
                     {
                         info && info.socialMedia ?
                             info.socialMedia.facebook ?
@@ -168,7 +169,9 @@ const CreatorProfile = () => {
                             <></>
                     }
                 </ul>
-                <div className='card-group' >
+
+                <h3 className="display-3">Contents of {user?.tempData?.username}</h3>
+                <div className='card-group'>
                     <Row>
                         {data.map((ele, i) => {
                             console.log(ele, 'ele')

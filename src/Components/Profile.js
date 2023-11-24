@@ -68,62 +68,53 @@ const Profile = (props) => {
 
 
     return (
-        <section className="section about-section gray-bg" id="about">
-            <div className="container" style={{ backgroundColor: '#f2f2f2' }}>
+        <section className="section about-section" id="about">
+            <div className="container">
                 {/* <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="img-fluid avatar-xxl rounded-circle" alt="" /> */}
 
-                <div className='body' >
+                <h2 className='display-1 text-center mt-5 mb-5'>Profile Page of <span className='text-muted'><u>{user?.data?.userId?.username}</u></span></h2>
+
+                <div className='card col-md-5 mb-3 mx-auto' >
                     <div className='media-body ml-5'>
                         {
                             user.data && user.data.userId ?
-                                <h3 className=" font-weight-bold "> {user.data.userId.username}</h3>
+                                <h1 className="h1 text-center">{user.data.userId.username}</h1>
                                 :
-                                <h4>Loading ....</h4>
+                                <h4 className='text-center'>Loading ....</h4>
                         }
-                        <span className=" font-size-13 mb-0"><h5><p>{user.data.bio}</p></h5></span>
+                        <span className="mb-3"><h2 className='h2 mb-3 text-center text-muted'><p>{user.data.bio}</p></h2></span>
+                    </div>
+                </div>
+                <div className='row'>
+                    <div className='card mt-2 mb-3 col-md-5 mr-md-3 mx-auto'>
+                        {/* {<h5>Subscribers :
+                            <Link onClick={() => setSelectedSubscribers(true)}>{subscribers.length}
+                            </Link></h5>} */}
+                        {
+                            <h5 className='h3 text-center'>Total Subscribers :
+                                <span onClick={() => setSelectedSubscribers(true)}>{subscribers.length}
+                                </span>
+                            </h5>
+                        }
+                    </div>
+                    <div className='card mt-2 mb-3 col-md-5 mx-auto'>
+                        {
+                            user.data && user.data.followers ?
+                                <h5 className="h3 text-center">Total Followers: {user.data.followers.length}</h5>
+                                :
+                                <h5>Loading...</h5>
+                        }
                     </div>
                 </div>
 
-                <div className='d-flex justify-center-top ' >
-                    {/* {<h5>Subscribers :
-                        <Link onClick={() => setSelectedSubscribers(true)}>{subscribers.length}
-                        </Link></h5>} */}
-                    {
-                        <h5>Subscribers :
-                            <span onClick={() => setSelectedSubscribers(true)}>{subscribers.length}
-                            </span></h5>
-                    }
-                </div>
-
-                {
-                    user.data && user.data.followers ?
-                        <h5 className="text-right">Followers: {user.data.followers.length}</h5>
-                        :
-                        <h5>Loading...</h5>
-                }
-
-                {/* {
-                        user.data && user.data.userId ?
-                            <h4>E-Mail : {user.data.userId.email}</h4>
-                            :
-                            <h4>Loading ....</h4>
-                    } */}
-
-                <h5> Categories: {user.data.categories}</h5>
-                {/* {
-                    user.data && user.data.socialMedia ?
-                        <h5> Links:</h5>
-                        :
-                        <h4>Loading...</h4>
-                } */}
-
-                <ul className='list-group mb-4'>
-                    <h5>Social Media:</h5>
+                <h5 className='h3 mt-2 mb-3'>Categories : {user.data.categories}</h5>
+                <ul className='mx-auto list-group mb-3 mt-2'>
+                    <h5 className='h3 mt-2 mb-3 card-header'>Social Media</h5>
                     {
                         user.data && user.data.socialMedia ?
                             user.data.socialMedia.facebook ?
 
-                                <li className='list-group-item'><h5>Facebook : <a href='https://www.facebook.com' target="_blank">{user.data.socialMedia.facebook}</a> </h5></li>
+                                <li className='list-group-item'><h5>Facebook : <a href={user.data.socialMedia.facebook} target="_blank">{user.data.socialMedia.facebook}</a> </h5></li>
                                 :
                                 <li className='list-group-item list-group-item-light'><h5>Facebook : Not Given.</h5></li>
                             :
@@ -132,7 +123,7 @@ const Profile = (props) => {
                     {
                         user.data && user.data.socialMedia ?
                             user.data.socialMedia.twitter ?
-                                <li className='list-group-item'><h5>Twitter : <a href='https://twitter.com' target="_blank">{user.data.socialMedia.twitter}</a> </h5></li>
+                                <li className='list-group-item'><h5>Twitter : <a href={user.data.socialMedia.twitter} target="_blank">{user.data.socialMedia.twitter}</a> </h5></li>
                                 :
                                 <li className='list-group-item list-group-item-light'><h5>Twitter : Not Given.</h5></li>
                             :
@@ -141,7 +132,7 @@ const Profile = (props) => {
                     {
                         user.data && user.data.socialMedia ?
                             user.data.socialMedia.instagram ?
-                                <li className='list-group-item'><h5>Instagram :  <a href='https://instagram.com' target="_blank">{user.data.socialMedia.instagram}</a></h5></li>
+                                <li className='list-group-item'><h5>Instagram :  <a href={user.data.socialMedia.instagram} target="_blank">{user.data.socialMedia.instagram}</a></h5></li>
                                 :
                                 <li className='list-group-item list-group-item-light'><h5>Instagram : Not Given.</h5></li>
                             :
@@ -150,19 +141,22 @@ const Profile = (props) => {
                     {
                         user.data && user.data.socialMedia ?
                             user.data.socialMedia.youtube ?
-                                <li className='list-group-item'><h5>Youtube :<a href='https://www.youtube.com' target="_blank">{user.data.socialMedia.youtube}</a> </h5></li>
+                                <li className='list-group-item'><h5>Youtube :<a href={user.data.socialMedia.youtube} target="_blank">{user.data.socialMedia.youtube}</a> </h5></li>
                                 :
                                 <li className='list-group-item list-group-item-light'><h5>Youtube : Not Given.</h5></li>
                             :
                             <></>
                     }
                 </ul>
-                {/* <div className="alert alert-info" role="alert">
+    
+                <div className="alert alert-info" role="alert">
                         <Link to='/create-plans' href="#" className="alert-link">
                             Manage Subscriptions
                         </Link>
-                    </div> */}
+                </div>
+                
                 <div className='card-group' >
+                    <h3 className='display-3 text-center'>{user?.data?.userId?.username} Contents</h3>
                     <Row>
                         {data.map((ele, i) => {
                             console.log(ele, 'ele')

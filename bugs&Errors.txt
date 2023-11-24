@@ -5,7 +5,7 @@ Bugs & Fixes;
 
 Payment Integration;  DONE.
 Rich Text Integration; DONE.
-npm corn or forever;    PENDING, Not Important;
+npm corn or forever/NodeMailer;    DONE.
 Admin Role Creation;    DONE.
 Payment CHECK logic;    DONE.
 Add Subscribers on Dashboard;        DONE.
