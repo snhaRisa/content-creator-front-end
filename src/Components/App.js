@@ -61,7 +61,7 @@ const App = (props)=>
     return(
         <div className="container">
             <div className="text-center">
-                <h1 className="display-3 mt-5 mb-5 pd-3" style={{color: 'MediumAquaMarine', fontSize: '6.5em', fontWeight: 'bold', fontFamily: 'Arial, sans-serif'}}>See Verse</h1>
+                <h1 className="display-1 mt-5 mb-5 pd-3" style={{color: 'Black', fontSize: '9.8em', fontWeight: 'bold', fontFamily: 'Arial, sans-serif'}}>See Verse</h1>
             </div>
             <Navigation isLog={isLog} handleIsLog={handleIsLog} />
         </div>
